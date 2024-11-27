@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Game Hub</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .content {
+            text-align: center;
+        }
+        .header-text {
+            font-size: 64px;
+            font-weight: bold;
+            background: linear-gradient(45deg, yellow, purple);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .links {
+            font-size: 16px;
+            color: white;
+            margin-top: 20px;
+        }
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            background-color: #333;
+            padding: 10px;
+            justify-content: center;
+        }
+        .tab {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #555;
+            border-radius: 5px;
+        }
+        .tab:hover {
+            background-color: #777;
+        }
+        .tab-content {
+            display: none;
+        }
+        .active-tab {
+            background-color: #777;
+        }
+        .active-content {
+            display: block;
+        }
+        .game-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .game-buttons button {
+            margin: 10px;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: black;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .game-buttons button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 class="header-text">Interactive Game Hub</h1>
+        
+        <div class="tabs">
+            <div class="tab" onclick="showTab('games')">Specific Games</div>
+            <div class="tab" onclick="showTab('sites')">Game Sites</div>
+            <div class="tab" onclick="showTab('music')">Music</div>
+        </div>
+
+        <div id="games" class="tab-content">
+            <h2>Specific Games</h2>
+            <div class="game-buttons">
+                <button onclick="openWordle()">Open Wordle in about:blank</button>
+                <button onclick="openRun3()">Open Run 3 in about:blank</button>
+                <button onclick="open1v1lol()">Open 1v1.lol in about:blank</button>
+                <button onclick="openRetroBowl()">Open Retro Bowl in about:blank</button>
+                <button onclick="openDinoGame()">Open Dino Game in about:blank</button>
+                <button onclick="openMinecraft()">Open Minecraft in about:blank</button>
+                <button onclick="openCookieClicker()">Open Cookie Clicker in about:blank</button>
+                <button onclick="openPacMan()">Open Pac-Man in about:blank</button>
+                <button onclick="openSubwaySurfers()">Open Subway Surfers in about:blank</button>
+                <button onclick="openSmashKarts()">Open Smash Karts in about:blank</button>
+                <button onclick="openTinyFishing()">Open Tiny Fishing in about:blank</button>
+                <button onclick="openCheckers()">Open Checkers in about:blank</button>
+
+                <!-- New Fantasy Madness button -->
+                <button onclick="openFantasyMadness()">Open Fantasy Madness in about:blank</button>
+
+                <!-- New 2048 button -->
+                <button onclick="open2048()">Open 2048 in about:blank</button>
+
+                <!-- New Monopoly button -->
+                <button onclick="openMonopoly()">Open Monopoly in about:blank</button>
+
+                <!-- Paper.io button back in Specific Games -->
+                <button onclick="openPaperIO()">Open Paper.io in about:blank</button>
+            </div>
+        </div>
+
+        <div id="sites" class="tab-content">
+            <h2>Game Sites</h2>
+            <div class="game-buttons">
+                <!-- Button for The Pizza Edition -->
+                <button onclick="openHiddenWebsite()">Open The Pizza Edition in about:blank</button>
+                <!-- Button for Imperial -->
+                <button onclick="openWebsite()">Open Imperial in about:blank</button>
+                <!-- Button for Mexi -->
+                <button onclick="openMexi()">Open Mexi in about:blank</button>
+                <!-- Button for Freezenova -->
+                <button onclick="openFreezenova()">Open Freezenova in about:blank</button>
+            </div>
+        </div>
+
+        <div id="music" class="tab-content">
+            <h2>Music</h2>
+            <iframe src="https://aquanix05.github.io/Music/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function openWordle() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://mikhad.github.io/wordle/#infinite" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openRun3() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://lekug.github.io/tn6pS9dCf37xAhkJv/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function open1v1lol() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://nate-games.pages.dev/0/g/1v1lol/game/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openRetroBowl() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://jakwhegf.github.io/uab123/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openDinoGame() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://wayou.github.io/t-rex-runner/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openMinecraft() {
+            window.open('https://openprocessing-usercontent.s3.amazonaws.com/files/user417384/visual2194491/h09c89be00ab14f644394e37328ea9e82/1.5.2%20(3).html', '_blank');
+        }
+
+        function openCookieClicker() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://cyrillbrito.github.io/cookieclicker/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openPacMan() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://masonicgit.github.io/pacman/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openSubwaySurfers() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://dddavit.github.io/subway/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openSmashKarts() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://script.google.com/macros/s/AKfycbx63iRe5mtf5PQGIn_eGwKePxCA1iU6w-YApn57Mh4phi2ZB-G-GCJA1YTV9jKrwoqb/exec" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openTinyFishing() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://legalizenuclearbombs5.github.io/games/Tiny%20Fishing" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openCheckers() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://kschuetz.github.io/checkers/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openFantasyMadness() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://fantasy-madness.com/?v=0.7.89c" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        // New function for 2048
+        function open2048() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://ovolve.github.io/2048-AI/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        // New function for Monopoly
+        function openMonopoly() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://francois-roseberry.github.io/monopoly-js/demo/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        // New function for The Pizza Edition
+        function openHiddenWebsite() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="http://data.malam.or.id/index.html" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        // New function for Imperial
+        function openWebsite() {
+            // Open the website directly in a new tab
+            window.open('https://sites.google.com/students.plsd.us/imperial/hoem?authuser=0', '_blank');
+        }
+
+        // New function for Mexi
+        function openMexi() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://mexismath.firebaseapp.com/index.html" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        // New function for Freezenova
+        function openFreezenova() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://unblocked-games.s3.amazonaws.com/index.html" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        // New function for Paper.io
+        function openPaperIO() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Loading...</title>
+                    </head>
+                    <body>
+                        <iframe src="https://paper-io.com/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active-tab'));
+            contents.forEach(content => content.classList.remove('active-content'));
+            document.getElementById(tabName).classList.add('active-content');
+            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active-tab');
+        }
+
+        showTab('games'); // By default, show the first tab (games)
+    </script>
+</body>
+</html>
