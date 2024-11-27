@@ -27,6 +27,10 @@
             color: white;
             margin-top: 20px;
         }
+        .link {
+            color: yellow; /* Change link color if desired */
+            text-decoration: underline;
+        }
         .tabs {
             display: flex;
             cursor: pointer;
@@ -77,6 +81,21 @@
     <div class="content">
         <h1 class="header-text">Nebuli</h1>
         
+        <div class="links">
+            <p>Note that some of these sites might (still) be blocked. 
+            <br>
+            Suggestions for games to add: 
+            <a class="link" href="https://docs.google.com/forms/d/e/1FAIpQLSd3HeINn5aHsFglxisijJlMa7mK7-_fQhEEmuCYoPSnY4sNBw/viewform" target="_blank">Link</a>, 
+            <span>Nerd Stats: </span>
+            <a class="link" href="https://docs.google.com/document/d/19OkAQdvproXgEJIJU9wuu0GUeKcJygttYPSFaDeP9Ig/edit?tab=t.0" target="_blank">Link</a> 
+            <span>Open any website: </span>
+            <a class="link" href="https://hushed-loretta-dylansucks-11eb35b8.koyeb.app/" target="_blank">Link</a>
+            <span>Join the discord: </span>
+            <a class="link" href="https://discord.gg/wyde4BHhPv" target="_blank">Link</a> 
+            (If blocked copy the link and paste in Interstellar)
+            </p>
+        </div>
+
         <div class="tabs">
             <div class="tab" onclick="showTab('games')">Specific Games</div>
             <div class="tab" onclick="showTab('sites')">Game Sites</div>
@@ -98,17 +117,9 @@
                 <button onclick="openSmashKarts()">Open Smash Karts in about:blank</button>
                 <button onclick="openTinyFishing()">Open Tiny Fishing in about:blank</button>
                 <button onclick="openCheckers()">Open Checkers in about:blank</button>
-
-                <!-- New Fantasy Madness button -->
                 <button onclick="openFantasyMadness()">Open Fantasy Madness in about:blank</button>
-
-                <!-- New 2048 button -->
                 <button onclick="open2048()">Open 2048 in about:blank</button>
-
-                <!-- New Monopoly button -->
                 <button onclick="openMonopoly()">Open Monopoly in about:blank</button>
-
-                <!-- Paper.io button back in Specific Games -->
                 <button onclick="openPaperIO()">Open Paper.io in about:blank</button>
             </div>
         </div>
@@ -116,13 +127,9 @@
         <div id="sites" class="tab-content">
             <h2>Game Sites</h2>
             <div class="game-buttons">
-                <!-- Button for The Pizza Edition -->
                 <button onclick="openHiddenWebsite()">Open The Pizza Edition in about:blank</button>
-                <!-- Button for Imperial -->
                 <button onclick="openWebsite()">Open Imperial in about:blank</button>
-                <!-- Button for Mexi -->
                 <button onclick="openMexi()">Open Mexi in about:blank</button>
-                <!-- Button for Freezenova -->
                 <button onclick="openFreezenova()">Open Freezenova in about:blank</button>
             </div>
         </div>
