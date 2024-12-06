@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Google Classroom</title>
+    <link rel="icon" href="https://www.gstatic.com/classroom/img/favicon.ico">
     <style>
         body {
             margin: 0;
@@ -75,10 +76,26 @@
         .game-buttons button:hover {
             background-color: #ddd;
         }
+        .about-button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .about-button:hover {
+            background-color: #777;
+        }
     </style>
 </head>
 <body>
     <div class="content">
+        <!-- About button -->
+        <button class="about-button" onclick="openAboutPage()">About Blank Cloaker</button>
+        
         <h1 class="header-text">Nebuli</h1>
         
         <div class="links">
@@ -121,6 +138,8 @@
                 <button onclick="open2048()">Open 2048 in about:blank</button>
                 <button onclick="openMonopoly()">Open Monopoly in about:blank</button>
                 <button onclick="openPaperIO()">Open Paper.io in about:blank</button>
+                <!-- New Block Blast Button -->
+                <button onclick="openBlockBlast()">Open Block Blast in about:blank</button>
             </div>
         </div>
 
@@ -141,6 +160,53 @@
     </div>
 
     <script>
+        function openAboutPage() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Home</title>
+                        <link rel="icon" href="https://www.gstatic.com/classroom/img/favicon.ico">
+                    </head>
+                    <body>
+                        <iframe src="https://aquanix05.github.io/Nebuli/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        function openBlockBlast() {
+            const newWindow = window.open('about:blank', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Block Blast</title>
+                    </head>
+                    <body>
+                        <iframe src="https://reunbozdo.github.io/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                alert('Failed to open the new window. Please check your browser settings.');
+            }
+        }
+
+        // Existing functions for games remain untouched...
+        
         function openWordle() {
             const newWindow = window.open('about:blank', '_blank');
             if (newWindow) {
@@ -409,7 +475,6 @@
             }
         }
 
-        // New function for 2048
         function open2048() {
             const newWindow = window.open('about:blank', '_blank');
             if (newWindow) {
@@ -432,7 +497,6 @@
             }
         }
 
-        // New function for Monopoly
         function openMonopoly() {
             const newWindow = window.open('about:blank', '_blank');
             if (newWindow) {
@@ -455,7 +519,6 @@
             }
         }
 
-        // New function for The Pizza Edition
         function openHiddenWebsite() {
             const newWindow = window.open('about:blank', '_blank');
             if (newWindow) {
@@ -478,13 +541,11 @@
             }
         }
 
-        // New function for Imperial
         function openWebsite() {
             // Open the website directly in a new tab
             window.open('https://sites.google.com/students.plsd.us/imperial/hoem?authuser=0', '_blank');
         }
 
-        // New function for Mexi
         function openMexi() {
             const newWindow = window.open('about:blank', '_blank');
             if (newWindow) {
@@ -507,7 +568,6 @@
             }
         }
 
-        // New function for Freezenova
         function openFreezenova() {
             const newWindow = window.open('about:blank', '_blank');
             if (newWindow) {
@@ -530,7 +590,6 @@
             }
         }
 
-        // New function for Paper.io
         function openPaperIO() {
             const newWindow = window.open('about:blank', '_blank');
             if (newWindow) {
