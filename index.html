@@ -1,571 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Google Classroom</title>
-    <link rel="icon" href="https://www.gstatic.com/classroom/img/favicon.ico">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: black;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-        .content {
-            text-align: center;
-        }
-        .header-text {
-            font-size: 64px;
-            font-weight: bold;
-            background: linear-gradient(45deg, yellow, purple);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .links {
-            font-size: 16px;
-            color: white;
-            margin-top: 20px;
-        }
-        .link {
-            color: yellow; /* Change link color if desired */
-            text-decoration: underline;
-            cursor: pointer; /* Change to pointer to indicate it's clickable */
-        }
-        .tabs {
-            display: flex;
-            cursor: pointer;
-            background-color: #333;
-            padding: 10px;
-            justify-content: center;
-        }
-        .tab {
-            padding: 10px 20px;
-            margin: 0 5px;
-            background-color: #555;
-            border-radius: 5px;
-        }
-        .tab:hover {
-            background-color: #777;
-        }
-        .tab-content {
-            display: none;
-        }
-        .active-tab {
-            background-color: #777;
-        }
-        .active-content {
-            display: block;
-        }
-        .game-buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .game-buttons button {
-            margin: 10px;
-            padding: 10px 15px;
-            font-size: 16px;
-            color: black;
-            background-color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .game-buttons button:hover {
-            background-color: #ddd;
-        }
-        .about-button {
-            margin: 20px;
-            padding: 10px 20px;
-            font-size: 20px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .about-button:hover {
-            background-color: #777;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NebuliOS - Coming Soon</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.2em;
+      background: linear-gradient(270deg, #ffeb3b, #9c27b0, #ffeb3b);
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 5s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 2em;
+      color: #aaa;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #111;
+      margin: 0.5em 0;
+      padding: 1em 2em;
+      border-radius: 12px;
+      font-size: 1.1em;
+      transition: background 0.3s ease;
+    }
+
+    li:hover {
+      background: #1f1f1f;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 1em;
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-    <div class="content">
-        <!-- About button -->
-        <button class="about-button" onclick="openAboutPage()">About Blank Cloaker</button>
-        
-        <h1 class="header-text">Nebuli</h1>
-        
-        <div class="links">
-            <p>Note that some of these sites might (still) be blocked. 
-            <br>
-            Suggestions for games to add: 
-            <a class="link" href="https://docs.google.com/forms/d/e/1FAIpQLSd3HeINn5aHsFglxisijJlMa7mK7-_fQhEEmuCYoPSnY4sNBw/viewform" target="_blank">Link</a>, 
-            <span>Nerd Stats: </span>
-            <a class="link" href="https://docs.google.com/document/d/19OkAQdvproXgEJIJU9wuu0GUeKcJygttYPSFaDeP9Ig/edit?tab=t.0" target="_blank">Link</a> 
-            <span>Open any website: </span>
-            <span class="link" onclick="openAnyWebsite()">Link</span> <!-- Changed this to a span with onclick -->
-            <span>Join the discord: </span>
-            <a class="link" href="https://discord.gg/wyde4BHhPv" target="_blank">Link</a> 
-            (If blocked copy the link and paste in Interstellar)
-            </p>
-        </div>
+  <h1>NebuliOS</h1>
+  <p>Get ready for the future of personal computing</p>
 
-        <div class="tabs">
-            <div class="tab" onclick="showTab('games')">Specific Games</div>
-            <div class="tab" onclick="showTab('sites')">Game Sites</div>
-            <div class="tab" onclick="showTab('music')">Music</div>
-            <div class="tab" onclick="showTab('ai')">AI</div> <!-- New Tab -->
-        </div>
+  <ul>
+    <li>🎮 750+ Games</li>
+    <li>🌐 Web Searching Freedom</li>
+    <li>🧠 Integrated AI</li>
+    <li>🎵 Music Experience</li>
+    <li>💻 Built-in Code Editor</li>
+    <li>✨ + More Surprises Await!</li>
+  </ul>
 
-        <div id="games" class="tab-content">
-            <h2>Specific Games</h2>
-            <div class="game-buttons">
-                <button onclick="openWordle()">Open Wordle in about:blank</button>
-                <button onclick="openRun3()">Open Run 3 in about:blank</button>
-                <button onclick="open1v1lol()">Open 1v1.lol in about:blank</button>
-                <button onclick="openRetroBowl()">Open Retro Bowl in about:blank</button>
-                <button onclick="openDinoGame()">Open Dino Game in about:blank</button>
-                <button onclick="openMinecraft()">Open Minecraft in about:blank</button>
-                <button onclick="openCookieClicker()">Open Cookie Clicker in about:blank</button>
-                <button onclick="openPacMan()">Open Pac-Man in about:blank</button>
-                <button onclick="openSubwaySurfers()">Open Subway Surfers in about:blank</button>
-                <button onclick="openSmashKarts()">Open Smash Karts in about:blank</button>
-                <button onclick="openTinyFishing()">Open Tiny Fishing in about:blank</button>
-                <button onclick="openCheckers()">Open Checkers in about:blank</button>
-                <button onclick="openFantasyMadness()">Open Fantasy Madness in about:blank</button>
-                <button onclick="open2048()">Open 2048 in about:blank</button>
-                <button onclick="openMonopoly()">Open Monopoly in about:blank</button>
-                <button onclick="openPaperIO()">Open Paper.io in about:blank</button>
-                <!-- New Block Blast Button -->
-                <button onclick="openBlockBlast()">Open Block Blast in about:blank</button>
-            </div>
-        </div>
-
-        <div id="sites" class="tab-content">
-            <h2>Game Sites</h2>
-            <div class="game-buttons">
-                <button onclick="openHiddenWebsite()">Open The Pizza Edition in about:blank</button>
-                <button onclick="openWebsite()">Open Imperial in about:blank</button>
-                <button onclick="openMexi()">Open Mexi in about:blank</button>
-                <button onclick="openFreezenova()">Open Freezenova in about:blank</button>
-            </div>
-        </div>
-
-        <div id="music" class="tab-content">
-            <h2>Music</h2>
-            <iframe src="https://aquanix05.github.io/Music/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-        </div>
-
-        <div id="ai" class="tab-content"> <!-- New AI Tab Content -->
-            <h2>AI</h2>
-            <iframe src="https://deepai.org/chat" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-        </div>
-    </div>
-
-    <script>
-        function openAboutPage() {
-            const newWindow = window.open('about:blank', '_blank');
-            if (newWindow) {
-                newWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Home</title>
-                        <link rel="icon" href="https://www.gstatic.com/classroom/img/favicon.ico">
-                    </head>
-                    <body>
-                        <iframe src="https://aquanix05.github.io/Nebuli/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                    </body>
-                    </html>
-                `);
-                newWindow.document.close();
-            } else {
-                alert('Failed to open the new window. Please check your browser settings.');
-            }
-        }
-
-        function openAnyWebsite() {
-            const websiteLink = "https://aquaboi.yaha.buzz/"; // The link that will be opened
-            const newWindow = window.open('about:blank', '_blank');
-            if (newWindow) {
-                newWindow.location.href = websiteLink; // Redirect to the desired URL
-            } else {
-                alert('Failed to open the new window. Please check your browser settings.');
-            }
-        }
-
-        function openBlockBlast() {
-            const newWindow = window.open('about:blank', '_blank');
-            if (newWindow) {
-                newWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>New Tab</title>
-                    </head>
-                    <body>
-                        <iframe src="https://reunbozdo.github.io/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                    </body>
-                    </html>
-                `);
-                newWindow.document.close();
-            } else {
-                alert('Failed to open the new window. Please check your browser settings.');
-            }
-        }
-
-        function openWordle() {
-            // Opens Wordle in a new window
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://mikhad.github.io/wordle/#infinite" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openRun3() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://lekug.github.io/tn6pS9dCf37xAhkJv/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function open1v1lol() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://nate-games.pages.dev/0/g/1v1lol/game/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openRetroBowl() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://jakwhegf.github.io/uab123/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openDinoGame() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://wayou.github.io/t-rex-runner/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openMinecraft() {
-            window.open('https://openprocessing-usercontent.s3.amazonaws.com/files/user417384/visual2194491/h09c89be00ab14f644394e37328ea9e82/1.5.2%20(3).html', '_blank');
-        }
-
-        function openCookieClicker() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://cyrillbrito.github.io/cookieclicker/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openPacMan() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://masonicgit.github.io/pacman/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openSubwaySurfers() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://dddavit.github.io/subway/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openSmashKarts() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://script.google.com/macros/s/AKfycbx63iRe5mtf5PQGIn_eGwKePxCA1iU6w-YApn57Mh4phi2ZB-G-GCJA1YTV9jKrwoqb/exec" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openTinyFishing() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://legalizenuclearbombs5.github.io/games/Tiny%20Fishing" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openCheckers() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://kschuetz.github.io/checkers/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openFantasyMadness() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://fantasy-madness.com/?v=0.7.89c" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function open2048() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://ovolve.github.io/2048-AI/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openMonopoly() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://francois-roseberry.github.io/monopoly-js/demo/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openHiddenWebsite() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="http://data.malam.or.id/index.html" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openWebsite() {
-            // Open the website directly in a new tab
-            window.open('https://sites.google.com/students.plsd.us/imperial/hoem?authuser=0', '_blank');
-        }
-
-        function openMexi() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://mexismath.firebaseapp.com/index.html" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openFreezenova() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://unblocked-games.s3.amazonaws.com/index.html" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function openPaperIO() {
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>New Tab</title>
-                </head>
-                <body>
-                    <iframe src="https://paper-io.com/" frameborder="0" style="border: none; width: 100vw; height: 100vh;"></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
-        }
-
-        function showTab(tabName) {
-            const tabs = document.querySelectorAll('.tab');
-            const contents = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active-tab'));
-            contents.forEach(content => content.classList.remove('active-content'));
-            document.getElementById(tabName).classList.add('active-content');
-            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active-tab');
-        }
-
-        showTab('games'); // By default, show the first tab (games)
-    </script>
+  <div class="footer">Powered by you, designed for everyone. Coming soon.</div>
 </body>
 </html>
