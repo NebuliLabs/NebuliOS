@@ -84,11 +84,11 @@
 
   <!-- Quick Links -->
   <div class="quick-links">
-    <a href="/active/embed.html?url=https://www.google.com"     target="_blank">Google</a>
-    <a href="/active/embed.html?url=https://www.youtube.com"    target="_blank">YouTube</a>
-    <a href="/active/embed.html?url=https://github.com"         target="_blank">GitHub</a>
-    <a href="/active/embed.html?url=https://discord.com/app"    target="_blank">Discord</a>
-    <a href="/active/embed.html?url=https://open.spotify.com"   target="_blank">Spotify</a>
+    <a href="/active/embed.html?url=www.google.com"     target="_blank">Google</a>
+    <a href="/active/embed.html?url=youtube.com"    target="_blank">YouTube</a>
+    <a href="/active/embed.html?url=github.com"         target="_blank">GitHub</a>
+    <a href="/active/embed.html?url=discord.com/app"    target="_blank">Discord</a>
+    <a href="/active/embed.html?url=open.spotify.com"   target="_blank">Spotify</a>
   </div>
 
   <script>
@@ -97,7 +97,7 @@
       e.preventDefault();
       const q = document.getElementById("query").value.trim();
       if (q) {
-        const duckUrl  = "https://duckduckgo.com/?q=" + q;               // NOT encoded
+        const duckUrl  = "duckduckgo.com/?q=" + q;               // NOT encoded
         const embedUrl = "/active/embed.html?url=" + duckUrl;
         window.open(embedUrl, "_blank");
       }
