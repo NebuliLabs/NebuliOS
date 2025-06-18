@@ -5,10 +5,9 @@
   <title>NebuliOS</title>
 
   <style>
-    /* ===== Reset & Base ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #000;                       /* black backdrop, white text */
+      background: #000;
       color: #fff;
       font-family: "Segoe UI", sans-serif;
       display: flex;
@@ -20,7 +19,6 @@
       padding: 1.5rem;
     }
 
-    /* ===== Shimmering NebuliOS Title ===== */
     h1 {
       font-size: 4rem;
       font-weight: 900;
@@ -37,7 +35,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* ===== Search Bar ===== */
     .search-box {
       width: 90%;
       max-width: 500px;
@@ -51,7 +48,6 @@
       outline: none;
     }
 
-    /* ===== Quick‑Link Buttons ===== */
     .quick-links {
       display: flex;
       flex-wrap: wrap;
@@ -77,12 +73,10 @@
 <body>
   <h1>NebuliOS</h1>
 
-  <!-- Search -->
   <form class="search-box" onsubmit="doSearch(event)">
     <input id="query" type="text" placeholder="Search with DuckDuckGo…" />
   </form>
 
-  <!-- Quick Links -->
   <div class="quick-links">
     <a href="/active/embed.html?url=www.google.com"     target="_blank">Google</a>
     <a href="/active/embed.html?url=youtube.com"    target="_blank">YouTube</a>
@@ -92,12 +86,12 @@
   </div>
 
   <script>
-    /* On submit, build the raw DuckDuckGo URL and pipe it through /active/embed.html */
+
     function doSearch(e) {
       e.preventDefault();
       const q = document.getElementById("query").value.trim();
       if (q) {
-        const duckUrl  = "duckduckgo.com/?q=" + q;               // NOT encoded
+        const duckUrl  = "duckduckgo.com/?q=" + q;
         const embedUrl = "/active/embed.html?url=" + duckUrl;
         window.open(embedUrl, "_blank");
       }
