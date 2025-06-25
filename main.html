@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NebuliOS</title>
+<style>
+  :root {
+    --box-h: 46px;
+    --bg: #000;
+    --bar: #ececec;
+    --btn-size: 12px;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    background: linear-gradient(135deg, #1e1e2f, #0a0a12);
+    height: 100vh;
+    color: #222;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
+  }
+  #wrapper {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    height: 80vh;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255 255 255 / 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      inset 0 1px 0 rgba(255 255 255 / 0.35),
+      0 10px 30px rgba(0, 0, 0, 0.7);
+    user-select: none;
+    z-index: 105;
+    transition: all 0.3s ease;
+    min-width: 300px;
+    min-height: 200px;
+    display: none;
+  }
+  #wrapper.minimized {
+    height: 32px;
+    overflow: visible;
+  }
+  #tabs {
+    display: flex;
+    align-items: center;
+    background: #dcdcdc;
+    height: 32px;
+    cursor: grab;
+    user-select: none;
+    z-index: 106;
+    flex-shrink: 0;
+  }
+  #tabs:active {
+    cursor: grabbing;
+  }
+  .traffic {
+    display: flex;
+    gap: 8px;
+    padding: 0 10px 0 14px;
+  }
+  .traffic div {
+    width: var(--btn-size);
+    height: var(--btn-size);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .close {
+    background: #ff605c;
+  }
+  .min {
+    background: #ffbd44;
+  }
+  .max {
+    background: #00ca4e;
+  }
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+    border-right: 1px solid #b8b8b8;
+    user-select: none;
+    font-size: 14px;
+    background: #eee;
+    position: relative;
+    width: auto;
+    min-width: 50px;
+    justify-content: center;
+    z-index: 107;
+  }
+  .tab.active {
+    background: #ffffff;
+  }
+  .tab-close {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    transform: translateY(-50%);
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    color: #900;
+    font-size: 16px;
+    user-select: none;
+  }
+  .tab:hover .favicon {
+    display: none;
+  }
+  .tab:hover .tab-close {
+    display: block;
+  }
+  .favicon {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+    user-select: none;
+  }
+  .tab-title {
+    max-width: 5ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: none;
+  }
+  #header {
+    height: var(--box-h);
+    background: var(--bar);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 10px;
+    transition: opacity 0.3s ease;
+    z-index: 108;
+    flex-shrink: 0;
+  }
+  #wrapper.minimized #header {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    padding: 0 14px;
+  }
+  .nav-btn {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+  }
+  .nav-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  #urlInput {
+    flex: 1;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+    user-select: text;
+  }
+  #view {
+    flex: 1;
+    position: relative;
+    transition: opacity 0.3s ease;
+    z-index: 109;
+    overflow: hidden;
+  }
+  .panel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: none;
+    background: white;
+  }
+  .panel.active {
+    display: block;
+  }
+  .taskbar {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 24px;
+    background: rgba(255 255 255 / 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 48px;
+    padding: 12px 32px;
+    box-shadow:
+      inset 0 1px 0 rgba(255 255 255 / 0.35),
+      0 10px 30px rgba(0, 0, 0, 0.5);
+    width: fit-content;
+    user-select: none;
+    overflow: visible;
+    z-index: 10;
+  }
+  .taskbar::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 48px;
+    pointer-events: none;
+    background: linear-gradient(
+      120deg,
+      rgba(255 255 255 / 0.25) 10%,
+      rgba(255 255 255 / 0.1) 40%,
+      rgba(255 255 255 / 0.05) 60%,
+      transparent 80%
+    );
+    mix-blend-mode: screen;
+    animation: glossMove 5s linear infinite;
+  }
+  @keyframes glossMove {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .taskbar-button {
+    width: 56px;
+    height: 56px;
+    background: rgba(255 255 255 / 0.18);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: #fff;
+    box-shadow:
+      0 4px 6px rgba(255 255 255 / 0.15),
+      inset 0 -4px 6px rgba(255 255 255 / 0.3),
+      inset 0 6px 12px rgba(0 0 0 / 0.4);
+    cursor: pointer;
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 15;
+  }
+  .taskbar-button::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -40%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255 255 255 / 0.4), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .taskbar-button:hover {
+    background: rgba(255 255 255 / 0.35);
+    box-shadow:
+      0 8px 16px rgba(255 255 255 / 0.4),
+      inset 0 -6px 8px rgba(255 255 255 / 0.5),
+      inset 0 8px 16px rgba(0 0 0 / 0.5);
+    transform: scale(1.1);
+  }
+  .taskbar-button:hover::before {
+    opacity: 1;
+  }
+  #minimizeBubble {
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    width: 64px;
+    height: 64px;
+    background: rgba(255 255 255 / 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 1px 0 rgba(255 255 255 / 0.35),
+      0 10px 30px rgba(0, 0, 0, 0.5);
+    cursor: grab;
+    user-select: none;
+    z-index: 115;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: #fff;
+    user-select: none;
+    transition: box-shadow 0.2s ease;
+  }
+  #minimizeBubble:active {
+    cursor: grabbing;
+  }
+  #starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: black;
+  }
+  #nebuliText {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    font-size: 50px;
+    font-weight: 800;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(90deg, #ffd600, #9c27b0, #ffd600);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+    z-index: 100;
+    user-select: none;
+    pointer-events: none;
+    text-transform: lowercase;
+    letter-spacing: 0.1em;
+  }
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  #centerTextContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    z-index: 99;
+    pointer-events: none;
+  }
+  #centerTime {
+    font-size: 72px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  #centerBattery {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+
+  /* Custom resize handle bottom right */
+  #resize-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 2px;
+    bottom: 2px;
+    cursor: se-resize;
+    background:
+      linear-gradient(45deg, transparent 50%, #999 50%),
+      linear-gradient(-45deg, transparent 50%, #999 50%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+    z-index: 120;
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<div id="wrapper" role="region" aria-label="Browser Omnibox">
+  <div id="tabs" aria-label="Browser Tabs" role="tablist" tabindex="0">
+    <div class="traffic" title="Window Controls" role="group" aria-label="Window controls">
+      <div class="close" title="Close Omnibox" role="button" tabindex="0" aria-label="Close window"></div>
+      <div class="min" title="Minimize Omnibox" role="button" tabindex="0" aria-label="Minimize window"></div>
+      <div class="max" title="Maximize/Restore Omnibox" role="button" tabindex="0" aria-label="Maximize or restore window"></div>
+    </div>
+  </div>
+  <div id="header">
+    <button id="backBtn" class="nav-btn" title="Back" disabled aria-label="Back">◀</button>
+    <button id="forwardBtn" class="nav-btn" title="Forward" disabled aria-label="Forward">▶</button>
+    <button id="reloadBtn" class="nav-btn" title="Reload" aria-label="Reload page">⟳</button>
+    <input id="urlInput" type="text" placeholder="Search or enter URL" autocomplete="off" spellcheck="false" aria-label="Address and search bar" />
+    <div id="newTab" style="padding:0 12px;font-size:20px;line-height:28px;cursor:pointer" title="New Tab" role="button" tabindex="0" aria-label="Open new tab">+</div>
+  </div>
+  <div id="view" role="main" aria-live="polite"></div>
+  <div id="resize-handle" aria-label="Resize omnibox" role="separator" tabindex="0" title="Resize"></div>
+</div>
+
+<div id="minimizeBubble" title="Restore Omnibox" role="button" tabindex="0" aria-label="Restore omnibox">🌐</div>
+
+<div id="nebuliText" aria-hidden="true">nebuliOS</div>
+
+<div id="centerTextContainer" aria-live="polite" aria-label="Current time and battery level">
+  <div id="centerTime">00:00:00</div>
+  <div id="centerBattery">Battery: N/A</div>
+</div>
+
+<div class="taskbar" aria-label="Liquid Glass Taskbar">
+  <div class="taskbar-button" id="browserBtn" title="Internet" role="button" tabindex="0" aria-label="Open Internet">🌐</div>
+  <div class="taskbar-button" id="gamesBtn" title="Games" role="button" tabindex="0" aria-label="Open Games">🎮</div>
+  <div class="taskbar-button" id="toolsBtn" title="Tools" role="button" tabindex="0" aria-label="Open Tools">🛠️</div>
+  <div class="taskbar-button" id="settingsBtn" title="Settings" role="button" tabindex="0" aria-label="Open Settings">⚙️</div>
+  <div class="taskbar-button" id="moreBtn" title="More" role="button" tabindex="0" aria-label="Open More">➕</div>
+</div>
+
+<script>
+  const wrapper = document.getElementById('wrapper');
+  const tabs = document.getElementById('tabs');
+  const resizeHandle = document.getElementById('resize-handle');
+  let dragging = false;
+  let offsetX = 0, offsetY = 0;
+
+  tabs.addEventListener('pointerdown', e => {
+    if (e.target.tagName !== 'INPUT' && !e.target.classList.contains('tab-close')) {
+      dragging = true;
+      offsetX = e.clientX - wrapper.offsetLeft;
+      offsetY = e.clientY - wrapper.offsetTop;
+      tabs.style.cursor = 'grabbing';
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    let newLeft = e.clientX - offsetX;
+    let newTop = e.clientY - offsetY;
+    const maxLeft = window.innerWidth - wrapper.offsetWidth;
+    const maxTop = window.innerHeight - wrapper.offsetHeight;
+    if (newLeft < 0) newLeft = 0;
+    if (newTop < 0) newTop = 0;
+    if (newLeft > maxLeft) newLeft = maxLeft;
+    if (newTop > maxTop) newTop = maxTop;
+    wrapper.style.left = newLeft + 'px';
+    wrapper.style.top = newTop + 'px';
+  });
+
+  document.addEventListener('pointerup', e => {
+    dragging = false;
+    tabs.style.cursor = 'grab';
+  });
+
+  let resizing = false;
+  let startX, startY, startWidth, startHeight;
+
+  resizeHandle.addEventListener('pointerdown', e => {
+    resizing = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    startWidth = wrapper.offsetWidth;
+    startHeight = wrapper.offsetHeight;
+    e.preventDefault();
+    resizeHandle.setPointerCapture(e.pointerId);
+  });
+
+  resizeHandle.addEventListener('pointermove', e => {
+    if (!resizing) return;
+    let newWidth = startWidth + (e.clientX - startX);
+    let newHeight = startHeight + (e.clientY - startY);
+    if (newWidth < 300) newWidth = 300;
+    if (newHeight < 200) newHeight = 200;
+    if (newWidth > window.innerWidth) newWidth = window.innerWidth;
+    if (newHeight > window.innerHeight) newHeight = window.innerHeight;
+    wrapper.style.width = newWidth + 'px';
+    wrapper.style.height = newHeight + 'px';
+  });
+
+  resizeHandle.addEventListener('pointerup', e => {
+    resizing = false;
+    resizeHandle.releasePointerCapture(e.pointerId);
+  });
+
+  const view = document.getElementById('view');
+  const backBtn = document.getElementById('backBtn');
+  const forwardBtn = document.getElementById('forwardBtn');
+  const reloadBtn = document.getElementById('reloadBtn');
+  const urlInput = document.getElementById('urlInput');
+  const newTabBtn = document.getElementById('newTab');
+  const minimizeBubble = document.getElementById('minimizeBubble');
+
+  let histories = {};
+  let tabCounter = 0;
+
+  function truncateTitle(str) {
+    if (str.length <= 5) return str;
+    return str.slice(0, 5) + '...';
+  }
+
+  function getFavicon(url) {
+    try {
+      const u = new URL(url);
+      return 'https://www.google.com/s2/favicons?domain=' + u.hostname;
+    } catch {
+      return '';
+    }
+  }
+
+  function addTab(url, title = 'New Tab', showUrl = null) {
+    tabCounter++;
+    const id = 'tab' + tabCounter;
+
+    const tab = document.createElement('div');
+    tab.className = 'tab';
+    tab.dataset.id = id;
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('tabindex', '0');
+    tab.setAttribute('aria-selected', 'false');
+    tab.title = title;
+
+    const favicon = document.createElement('img');
+    favicon.className = 'favicon';
+    favicon.src = getFavicon(url);
+    favicon.alt = '';
+    favicon.ariaHidden = true;
+
+    const titleSpan = document.createElement('span');
+    titleSpan.className = 'tab-title';
+    titleSpan.textContent = truncateTitle(title);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'tab-close';
+    closeBtn.textContent = '×';
+    closeBtn.title = 'Close tab';
+    closeBtn.setAttribute('aria-label', 'Close tab');
+
+    closeBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      closeTab(id);
+    });
+
+    closeBtn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeTab(id);
+      }
+    });
+
+    tab.addEventListener('click', () => activateTab(id));
+    tab.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateTab(id);
+      }
+    });
+
+    tab.appendChild(favicon);
+    tab.appendChild(titleSpan);
+    tab.appendChild(closeBtn);
+
+    tabs.appendChild(tab);
+
+    const iframe = document.createElement('iframe');
+    iframe.className = 'panel active';
+    iframe.dataset.id = id;
+    iframe.src = url;
+    iframe.title = title;
+    view.appendChild(iframe);
+
+    histories[id] = { stack: [url], idx: 0, iframe: iframe, showUrl: showUrl || url };
+
+    activateTab(id);
+    updateNavButtons();
+    return id;
+  }
+
+  function activateTab(id) {
+    [...tabs.querySelectorAll('.tab')].forEach(t => {
+      t.classList.toggle('active', t.dataset.id == id);
+      t.setAttribute('aria-selected', t.dataset.id == id ? 'true' : 'false');
+    });
+    [...view.querySelectorAll('iframe')].forEach(f => {
+      f.classList.toggle('active', f.dataset.id == id);
+    });
+    const h = histories[id];
+    if (h) {
+      urlInput.value = h.showUrl;
+      updateNavButtons();
+    }
+  }
+
+  function closeTab(id) {
+    const tab = tabs.querySelector(`.tab[data-id="${id}"]`);
+    const iframe = view.querySelector(`iframe[data-id="${id}"]`);
+    if (tab) tab.remove();
+    if (iframe) iframe.remove();
+    delete histories[id];
+    const remainingTabs = [...tabs.querySelectorAll('.tab')];
+    if (remainingTabs.length > 0) {
+      activateTab(remainingTabs[remainingTabs.length - 1].dataset.id);
+    } else {
+      wrapper.style.display = 'none';
+      minimizeBubble.style.display = 'none';
+    }
+  }
+
+  function navigate(id, url) {
+    const h = histories[id];
+    if (!h) return;
+    if (h.idx < h.stack.length - 1) {
+      h.stack.splice(h.idx + 1);
+    }
+    h.stack.push(url);
+    h.idx++;
+    h.iframe.src = url;
+    h.showUrl = url.startsWith('nebuli://') ? url : url;
+    urlInput.value = h.showUrl;
+    updateTabDisplay(id, url);
+    updateNavButtons();
+  }
+
+  function updateTabDisplay(id, url) {
+    const tab = tabs.querySelector(`.tab[data-id="${id}"]`);
+    if (!tab) return;
+    const fav = tab.querySelector('.favicon');
+    if (fav) fav.src = getFavicon(url);
+
+    const titleSpan = tab.querySelector('.tab-title');
+    let displayTitle = url;
+    try {
+      const u = new URL(url);
+      displayTitle = u.hostname;
+    } catch { }
+
+    tab.title = displayTitle;
+    if (titleSpan) {
+      titleSpan.textContent = truncateTitle(displayTitle);
+    }
+  }
+
+  function goBack() {
+    const id = currentTabId();
+    const h = histories[id];
+    if (h && h.idx > 0) {
+      h.idx--;
+      h.iframe.src = h.stack[h.idx];
+      h.showUrl = h.stack[h.idx];
+      urlInput.value = h.showUrl;
+      updateTabDisplay(id, h.stack[h.idx]);
+      updateNavButtons();
+    }
+  }
+
+  function goForward() {
+    const id = currentTabId();
+    const h = histories[id];
+    if (h && h.idx < h.stack.length - 1) {
+      h.idx++;
+      h.iframe.src = h.stack[h.idx];
+      h.showUrl = h.stack[h.idx];
+      urlInput.value = h.showUrl;
+      updateTabDisplay(id, h.stack[h.idx]);
+      updateNavButtons();
+    }
+  }
+
+  function reload() {
+    const id = currentTabId();
+    const h = histories[id];
+    if (h) {
+      h.iframe.src = h.stack[h.idx];
+    }
+  }
+
+  function currentTabId() {
+    const activeTab = tabs.querySelector('.tab.active');
+    return activeTab ? activeTab.dataset.id : null;
+  }
+
+  function updateNavButtons() {
+    const id = currentTabId();
+    const h = histories[id];
+    if (!h) {
+      backBtn.disabled = true;
+      forwardBtn.disabled = true;
+      return;
+    }
+    backBtn.disabled = h.idx <= 0;
+    forwardBtn.disabled = h.idx >= h.stack.length - 1;
+  }
+
+  backBtn.addEventListener('click', () => goBack());
+  forwardBtn.addEventListener('click', () => goForward());
+  reloadBtn.addEventListener('click', () => reload());
+
+  urlInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      let val = urlInput.value.trim();
+      if (!val) return;
+      if (!val.startsWith('http://') && !val.startsWith('https://') && !val.startsWith('nebuli://') && !val.startsWith('/')) {
+        val = 'https://duckduckgo.com/?q=' + encodeURIComponent(val);
+      }
+      const id = currentTabId();
+      if (id) navigate(id, val);
+    }
+  });
+
+  newTabBtn.addEventListener('click', () => {
+    addTab('/search.html', 'New Tab', 'nebuli://search');
+    if (wrapper.style.display === 'none') {
+      wrapper.style.display = 'flex';
+      minimizeBubble.style.display = 'none';
+    }
+  });
+
+  addTab('/search.html', 'New Tab', 'nebuli://search');
+
+  const browserBtn = document.getElementById('browserBtn');
+  const gamesBtn = document.getElementById('gamesBtn');
+  const toolsBtn = document.getElementById('toolsBtn');
+  const settingsBtn = document.getElementById('settingsBtn');
+  const moreBtn = document.getElementById('moreBtn');
+
+  browserBtn.addEventListener('click', () => {
+    addTab('/search.html', 'Internet', 'nebuli://search');
+    if (wrapper.style.display === 'none') {
+      wrapper.style.display = 'flex';
+      minimizeBubble.style.display = 'none';
+    }
+  });
+
+  gamesBtn.addEventListener('click', () => {
+    addTab('https://nebulilabs.github.io/cyn0', 'Games', 'nebuli://games');
+    if (wrapper.style.display === 'none') {
+      wrapper.style.display = 'flex';
+      minimizeBubble.style.display = 'none';
+    }
+  });
+
+  toolsBtn.addEventListener('click', () => {
+    addTab('/tools.html', 'Tools', 'nebuli://tools');
+    if (wrapper.style.display === 'none') {
+      wrapper.style.display = 'flex';
+      minimizeBubble.style.display = 'none';
+    }
+  });
+
+  settingsBtn.addEventListener('click', () => {
+    addTab('/settings.html', 'Settings', 'nebuli://settings');
+    if (wrapper.style.display === 'none') {
+      wrapper.style.display = 'flex';
+      minimizeBubble.style.display = 'none';
+    }
+  });
+
+  moreBtn.addEventListener('click', () => {
+    addTab('/more.html', 'More', 'nebuli://more');
+    if (wrapper.style.display === 'none') {
+      wrapper.style.display = 'flex';
+      minimizeBubble.style.display = 'none';
+    }
+  });
+  const trafficClose = document.querySelector('.close');
+  const trafficMin = document.querySelector('.min');
+  const trafficMax = document.querySelector('.max');
+
+  trafficClose.addEventListener('click', () => {
+    [...tabs.querySelectorAll('.tab')].forEach(t => {
+      const id = t.dataset.id;
+      closeTab(id);
+    });
+    wrapper.style.display = 'none';
+    minimizeBubble.style.display = 'none';
+  });
+
+  trafficMin.addEventListener('click', () => {
+    wrapper.style.display = 'none';
+    minimizeBubble.style.display = 'flex';
+  });
+
+  trafficMax.addEventListener('click', () => {
+    if (wrapper.classList.contains('fullscreen')) {
+      wrapper.style.width = '80vw';
+      wrapper.style.height = '80vh';
+      wrapper.style.top = '10%';
+      wrapper.style.left = '50%';
+      wrapper.style.transform = 'translateX(-50%)';
+      wrapper.classList.remove('fullscreen');
+    } else {
+      wrapper.style.width = '100vw';
+      wrapper.style.height = '100vh';
+      wrapper.style.top = '0';
+      wrapper.style.left = '0';
+      wrapper.style.transform = 'none';
+      wrapper.classList.add('fullscreen');
+    }
+    wrapper.style.display = 'flex';
+    minimizeBubble.style.display = 'none';
+  });
+
+  minimizeBubble.addEventListener('click', () => {
+    wrapper.style.display = 'flex';
+    minimizeBubble.style.display = 'none';
+  });
+
+  let bubbleDragging = false;
+  let bubbleOffsetX = 0;
+  let bubbleOffsetY = 0;
+
+  minimizeBubble.addEventListener('pointerdown', e => {
+    bubbleDragging = true;
+    bubbleOffsetX = e.clientX - minimizeBubble.offsetLeft;
+    bubbleOffsetY = e.clientY - minimizeBubble.offsetTop;
+    minimizeBubble.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('pointermove', e => {
+    if (!bubbleDragging) return;
+    let newLeft = e.clientX - bubbleOffsetX;
+    let newTop = e.clientY - bubbleOffsetY;
+    if (newLeft < 0) newLeft = 0;
+    if (newTop < 0) newTop = 0;
+    if (newLeft + minimizeBubble.offsetWidth > window.innerWidth) newLeft = window.innerWidth - minimizeBubble.offsetWidth;
+    if (newTop + minimizeBubble.offsetHeight > window.innerHeight) newTop = window.innerHeight - minimizeBubble.offsetHeight;
+    minimizeBubble.style.left = newLeft + 'px';
+    minimizeBubble.style.top = newTop + 'px';
+  });
+
+  document.addEventListener('pointerup', e => {
+    bubbleDragging = false;
+    minimizeBubble.style.cursor = 'grab';
+  });
+
+  window.onload = () => {
+    wrapper.style.display = 'none';
+    minimizeBubble.style.display = 'none';
+  };
+
+  const centerTime = document.getElementById('centerTime');
+  const centerBattery = document.getElementById('centerBattery');
+
+  function updateTime() {
+    const now = new Date();
+    centerTime.textContent = now.toLocaleTimeString();
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+
+  if ('getBattery' in navigator) {
+    navigator.getBattery().then(battery => {
+      function updateBattery() {
+        centerBattery.textContent = `Battery: ${(battery.level * 100).toFixed(0)}%`;
+      }
+      battery.addEventListener('levelchange', updateBattery);
+      updateBattery();
+    });
+  } else {
+    centerBattery.textContent = 'Battery: N/A';
+  }
+
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const STAR_COUNT = 200;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function randomRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  class Star {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = randomRange(0, canvas.width);
+      this.y = randomRange(0, canvas.height);
+      this.size = randomRange(0.5, 1.5);
+      this.speed = randomRange(0.2, 1.0);
+      this.alpha = randomRange(0.3, 1.0);
+    }
+    update() {
+      this.x -= this.speed;
+      if (this.x < 0) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
+      ctx.shadowColor = 'white';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+    }
+  }
+
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push(new Star());
+    }
+  }
+
+  function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const star of stars) {
+      star.update();
+      star.draw();
+    }
+    requestAnimationFrame(animateStars);
+  }
+
+  initStars();
+  animateStars();
+
+</script>
+</body>
+</html>
