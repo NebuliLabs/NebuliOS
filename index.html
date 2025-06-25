@@ -3,90 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NebuliOS - Coming Soon</title>
+  <title>Clever | Select your School</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      font-family:'Open Sans',sans-serif;
+      background:url("https://riseandshine.childrensnational.org/wp-content/uploads/2020/09/girl-studying-with-laptop-at-home-feature.png") center/cover no-repeat;
+      position:relative;
     }
+    body::after{content:"";position:absolute;inset:0;background:#000;opacity:.45}
 
-    h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
-      background: linear-gradient(270deg, #ffeb3b, #9c27b0, #ffeb3b);
-      background-size: 600% 600%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 5s linear infinite;
-    }
+    .wrapper{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:3rem 1rem}
+    .card{display:flex;background:#fff;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.15);max-width:780px;width:100%}
 
-    @keyframes shimmer {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
+    .form-col{flex:1;padding:2.5rem 3rem;position:relative}
+    h1{font-size:2.75rem;font-weight:700;color:#2d8cff;margin-bottom:1.4rem}
+    .form-col h2{font-size:1.25rem;font-weight:600;margin-bottom:1.4rem;color:#37474f}
+    label{font-size:.75rem;font-weight:600;letter-spacing:.03em;color:#5f6368;display:block;margin-bottom:.4rem}
+    input{width:100%;padding:.9rem .95rem;font-size:1rem;border:1px solid #dadce0;border-radius:4px}
 
-    p {
-      font-size: 1.2em;
-      margin-bottom: 2em;
-      color: #aaa;
-    }
+    .see-more-always{margin-top:.5rem;font-size:.9rem;color:#0057ff;cursor:pointer;text-decoration:underline}
 
-    ul {
-      list-style: none;
-      padding: 0;
-    }
+    .popup-message{position:absolute;top:182px;left:3rem;background:#fff;padding:.5rem .75rem;border:1px solid #2d8cff;border-radius:4px;box-shadow:0 4px 8px rgba(0,0,0,.15);font-size:.85rem;display:none;z-index:2}
 
-    li {
-      background: #111;
-      margin: 0.5em 0;
-      padding: 1em 2em;
-      border-radius: 12px;
-      font-size: 1.1em;
-      transition: background 0.3s ease;
-    }
+    .badge-col{width:240px;padding:2.2rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;border-left:1px solid #e5e7eb}
+    .badge-icon{width:140px;height:140px;object-fit:cover;border-radius:8px}
+    .btn-badge{width:100%;padding:.9rem 1rem;font-size:1rem;font-weight:600;color:#fff;background:#2d8cff;border:none;border-radius:4px;cursor:pointer;transition:box-shadow .15s}
+    .btn-badge:hover{box-shadow:0 2px 6px rgba(45,140,255,.4)}
+    .admin-link{font-size:.9rem;color:#0057ff;text-decoration:underline}
 
-    li:hover {
-      background: #1f1f1f;
-    }
+    footer{position:absolute;bottom:1.4rem;left:1.4rem;z-index:1;color:#fff;font-size:.75rem;line-height:1.35}
+    footer a{color:#fff;text-decoration:underline}
 
-    .footer {
-      position: absolute;
-      bottom: 1em;
-      font-size: 0.9em;
-      color: #555;
+    @media(max-width:640px){
+      .card{flex-direction:column;max-width:420px}
+      .badge-col{width:100%;border-left:none;border-top:1px solid #e5e7eb}
+      .form-col{padding:2rem 1.5rem}
     }
   </style>
 </head>
 <body>
-  <h1>NebuliOS</h1>
-  <p>Get ready for the future of personal computing</p>
+  <div class="wrapper">
+    <div class="card">
+      <div class="form-col">
+        <h1>Log in</h1>
+        <h2>Search for your school</h2>
+        <label for="school">School name</label>
+        <input id="school" type="text" placeholder="Type school name here…" />
+        <div id="popup" class="popup-message">See See More</div>
+        <p class="see-more-always" id="seeMoreClick">See More</p>
+      </div>
+      <div class="badge-col">
+        <img class="badge-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStj-uJMDnMttrSg8Y7MswfVeEc5Q72QvWa8elxjvR5ZpQIGc-TgWxwuBw2wCdlAtv3Va8&usqp=CAU" alt="Badge icon" />
+        <button class="btn-badge">Clever Badge login</button>
+        <a class="admin-link" href="#">District admin login</a>
+      </div>
+    </div>
+  </div>
 
-  <ul>
-    <li>🎮 750+ Games</li>
-    <li>🌐 Web Searching Freedom</li>
-    <li>🧠 Integrated AI</li>
-    <li>🎵 Music Experience</li>
-    <li>💻 Built-in Code Editor</li>
-    <li>✨ + More Surprises Await!</li>
-  </ul>
+  <footer>
+    <strong>Clever</strong> © 2025<br/>
+    <a href="https://clever.com/trust/privacy/policy">Privacy</a><br/>
+    <a href="https://clever.com/about/terms">Terms</a>
+  </footer>
 
-  <div class="footer">Powered by you, designed for everyone. Coming soon.</div>
+  <script>
+    const input = document.getElementById("school");
+    const popup = document.getElementById("popup");
+    const seeMoreClick = document.getElementById("seeMoreClick");
+    function openMainInBlank() {
+      const newTab = window.open("about:blank", "_blank");
+      if (!newTab) {
+        alert("Popup blocked! Please allow popups for this site.");
+        return;
+      }
+      newTab.document.write(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <title>New Tab</title>
+          <link rel="icon" href="https://images.icon-icons.com/842/PNG/512/Google_Chrome_icon-icons.com_66992.png" type="image/png" />
+          <style>
+            /* Make iframe fill entire viewport */
+            html, body {
+              margin: 0; padding: 0; height: 100%;
+              overflow: hidden;
+              background: white;
+            }
+            iframe {
+              border: none;
+              width: 100vw;
+              height: 100vh;
+            }
+          </style>
+        </head>
+        <body>
+          <iframe src="/main.html" title="Main Content"></iframe>
+        </body>
+        </html>
+      `);
+      newTab.document.close();
+    }
+
+    input.addEventListener("input", () => {
+      const val = input.value.trim().toLowerCase();
+      if (val === "nebulidagoat") {
+        openMainInBlank();
+        return;
+      }
+      popup.style.display = val ? "block" : "none";
+    });
+
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter" && input.value.trim().toLowerCase() === "nebulidagoat") {
+        e.preventDefault();
+        openMainInBlank();
+      }
+    });
+
+    seeMoreClick.addEventListener("click", () => { alert('Your school is "nebulidagoat"'); });
+  </script>
 </body>
 </html>
