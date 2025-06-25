@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NebuliOS - Settings</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #1e1e2f, #0a0a12);
+      color: #ddd;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      user-select: none;
+    }
+    #nebuliText {
+      margin-top: 40px;
+      font-size: 36px;
+      font-weight: 800;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(90deg, #ffd600, #9c27b0, #ffd600);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+      text-transform: lowercase;
+      letter-spacing: 0.1em;
+      align-self: center;
+      user-select: none;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    main {
+      margin: 40px auto;
+      padding: 24px;
+      background: rgba(255 255 255 / 0.08);
+      border-radius: 12px;
+      width: 320px;
+      box-shadow:
+        inset 0 1px 0 rgba(255 255 255 / 0.35),
+        0 10px 30px rgba(0,0,0,0.7);
+      user-select: text;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #fff;
+      user-select: none;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+      outline: none;
+      margin-bottom: 20px;
+      background: rgba(255 255 255 / 0.15);
+      color: #fff;
+      transition: background 0.3s ease;
+    }
+    input[type="text"]:focus {
+      background: rgba(255 255 255 / 0.30);
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+    .toggle-label {
+      font-weight: 600;
+      font-size: 16px;
+      color: #fff;
+    }
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .info {
+      font-size: 14px;
+      color: #bbb;
+      margin-top: -16px;
+      margin-bottom: 24px;
+      user-select: none;
+    }
+    button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(90deg, #ffd600, #9c27b0);
+      color: #111;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      width: 100%;
+      user-select: none;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #9c27b0, #ffd600);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="nebuliText">settings</div>
+
+  <main>
+    <label for="titleInput">Custom Title</label>
+    <input type="text" id="titleInput" placeholder="Set a custom page title" autocomplete="off" />
+
+    <label for="faviconInput">Custom Favicon URL</label>
+    <input type="text" id="faviconInput" placeholder="Set a custom favicon URL" autocomplete="off" />
+
+    <div class="toggle-container">
+      <input type="checkbox" id="tabAnchorToggle" />
+      <label for="tabAnchorToggle" class="toggle-label">Enable Tab Anchor (Confirm before leaving)</label>
+    </div>
+    <div class="info">When enabled, you’ll see a prompt when you try to close or navigate away.</div>
+
+    <button id="resetBtn" title="Reset all settings to default">Reset to Default</button>
+  </main>
+
+  <script>
+    const titleInput = document.getElementById('titleInput');
+    const faviconInput = document.getElementById('faviconInput');
+    const tabAnchorToggle = document.getElementById('tabAnchorToggle');
+    const resetBtn = document.getElementById('resetBtn');
+    function loadSettings() {
+      const savedTitle = localStorage.getItem('customTitle') || '';
+      const savedFavicon = localStorage.getItem('customFavicon') || '';
+      const tabAnchorEnabled = localStorage.getItem('tabAnchorEnabled') === 'true';
+
+      titleInput.value = savedTitle;
+      faviconInput.value = savedFavicon;
+      tabAnchorToggle.checked = tabAnchorEnabled;
+
+      if (savedTitle) document.title = savedTitle;
+      else document.title = 'Settings';
+
+      updateFavicon(savedFavicon);
+    }
+
+    function updateFavicon(url) {
+      let link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+      }
+      if (url) {
+        link.href = url;
+      } else {
+        link.href = 'favicon.ico';
+      }
+    }
+
+    function saveSettings() {
+      const titleVal = titleInput.value.trim();
+      const faviconVal = faviconInput.value.trim();
+      const tabAnchorVal = tabAnchorToggle.checked;
+
+      localStorage.setItem('customTitle', titleVal);
+      localStorage.setItem('customFavicon', faviconVal);
+      localStorage.setItem('tabAnchorEnabled', tabAnchorVal);
+
+      if (titleVal) document.title = titleVal;
+      else document.title = 'Settings';
+
+      updateFavicon(faviconVal);
+    }
+
+    function resetSettings() {
+      localStorage.removeItem('customTitle');
+      localStorage.removeItem('customFavicon');
+      localStorage.removeItem('tabAnchorEnabled');
+
+      titleInput.value = '';
+      faviconInput.value = '';
+      tabAnchorToggle.checked = false;
+
+      document.title = 'Settings';
+      updateFavicon('');
+    }
+
+    titleInput.addEventListener('input', saveSettings);
+    faviconInput.addEventListener('input', saveSettings);
+    tabAnchorToggle.addEventListener('change', saveSettings);
+    resetBtn.addEventListener('click', () => {
+      resetSettings();
+      saveSettings();
+    });
+
+    window.addEventListener('beforeunload', (e) => {
+      if (tabAnchorToggle.checked) {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    });
+
+    loadSettings();
+  </script>
+</body>
+</html>
