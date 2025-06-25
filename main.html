@@ -726,14 +726,14 @@
   });
 
   newTabBtn.addEventListener('click', () => {
-    addTab('NebuliOS/search.html', 'New Tab', 'nebuli://search');
+    addTab('/NebuliOS/search.html', 'New Tab', 'nebuli://search');
     if (wrapper.style.display === 'none') {
       wrapper.style.display = 'flex';
       minimizeBubble.style.display = 'none';
     }
   });
 
-  addTab('NebuliOS/search.html', 'New Tab', 'nebuli://search');
+  addTab('/NebuliOS/search.html', 'New Tab', 'nebuli://search');
 
   const browserBtn = document.getElementById('browserBtn');
   const gamesBtn = document.getElementById('gamesBtn');
@@ -742,7 +742,7 @@
   const moreBtn = document.getElementById('moreBtn');
 
   browserBtn.addEventListener('click', () => {
-    addTab('NebuliOS/search.html', 'Internet', 'nebuli://search');
+    addTab('/NebuliOS/search.html', 'Internet', 'nebuli://search');
     if (wrapper.style.display === 'none') {
       wrapper.style.display = 'flex';
       minimizeBubble.style.display = 'none';
@@ -758,7 +758,7 @@
   });
 
   toolsBtn.addEventListener('click', () => {
-    addTab('NebuliOS/tools.html', 'Tools', 'nebuli://tools');
+    addTab('/NebuliOS/tools.html', 'Tools', 'nebuli://tools');
     if (wrapper.style.display === 'none') {
       wrapper.style.display = 'flex';
       minimizeBubble.style.display = 'none';
@@ -766,7 +766,7 @@
   });
 
   settingsBtn.addEventListener('click', () => {
-    addTab('NebuliOS/settings.html', 'Settings', 'nebuli://settings');
+    addTab('/NebuliOS/settings.html', 'Settings', 'nebuli://settings');
     if (wrapper.style.display === 'none') {
       wrapper.style.display = 'flex';
       minimizeBubble.style.display = 'none';
@@ -774,7 +774,7 @@
   });
 
   moreBtn.addEventListener('click', () => {
-    addTab('NebuliOS/more.html', 'More', 'nebuli://more');
+    addTab('/NebuliOS/more.html', 'More', 'nebuli://more');
     if (wrapper.style.display === 'none') {
       wrapper.style.display = 'flex';
       minimizeBubble.style.display = 'none';
