@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>NebuliOS</title>
-
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -18,7 +17,6 @@
       gap: 2rem;
       padding: 1.5rem;
     }
-
     h1 {
       font-size: 4rem;
       font-weight: 900;
@@ -34,7 +32,6 @@
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .search-box {
       width: 90%;
       max-width: 500px;
@@ -47,7 +44,6 @@
       font-size: 1.1rem;
       outline: none;
     }
-
     .quick-links {
       display: flex;
       flex-wrap: wrap;
@@ -69,31 +65,26 @@
     }
   </style>
 </head>
-
 <body>
   <h1>NebuliOS</h1>
-
   <form class="search-box" onsubmit="doSearch(event)">
     <input id="query" type="text" placeholder="Search with DuckDuckGo…" />
   </form>
-
   <div class="quick-links">
-    <a href="/active/embed.html?url=www.google.com"     target="_blank">Google</a>
-    <a href="/active/embed.html?url=youtube.com"    target="_blank">YouTube</a>
-    <a href="/active/embed.html?url=github.com"         target="_blank">GitHub</a>
-    <a href="/active/embed.html?url=discord.com/app"    target="_blank">Discord</a>
-    <a href="/active/embed.html?url=open.spotify.com"   target="_blank">Spotify</a>
+    <a href="/active/embed.html?url=www.google.com">Google</a>
+    <a href="/active/embed.html?url=youtube.com">YouTube</a>
+    <a href="/active/embed.html?url=github.com">GitHub</a>
+    <a href="/active/embed.html?url=discord.com/app">Discord</a>
+    <a href="/active/embed.html?url=open.spotify.com">Spotify</a>
   </div>
-
   <script>
-
     function doSearch(e) {
       e.preventDefault();
       const q = document.getElementById("query").value.trim();
       if (q) {
         const duckUrl  = "duckduckgo.com/?q=" + q;
         const embedUrl = "/active/embed.html?url=" + duckUrl;
-        window.open(embedUrl, "_blank");
+        window.location.href = embedUrl;
       }
     }
   </script>
