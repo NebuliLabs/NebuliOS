@@ -718,7 +718,7 @@
       let val = urlInput.value.trim();
       if (!val) return;
       if (!val.startsWith('http://') && !val.startsWith('https://') && !val.startsWith('nebuli://') && !val.startsWith('/')) {
-        val = 'https://duckduckgo.com/?q=' + encodeURIComponent(val);
+        val = '/active/embed.html?url=https://duckduckgo.com/?q=' + encodeURIComponent(val);
       }
       const id = currentTabId();
       if (id) navigate(id, val);
