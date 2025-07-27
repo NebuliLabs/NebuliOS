@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NebuliOS Code Editor</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: url('https://i.imgur.com/u5vnBcM.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+    body, #container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+    #container {
+      position: relative;
+    }
+    #left-panel {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      min-width: 200px;
+      max-width: 90%;
+      background: rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.25);
+      overflow: hidden;
+    }
+    .editor-section {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      flex-grow: 1;
+      min-height: 50px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      overflow: hidden;
+    }
+    .editor-section:last-child {
+      border-bottom: none;
+    }
+    textarea {
+      flex: 1;
+      resize: none;
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: white;
+      font-family: monospace;
+      font-size: 1rem;
+      padding: 10px;
+      outline: none;
+      border-radius: 0 0 0 0;
+      min-height: 40px;
+    }
+    .restore-btn {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 12px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+      user-select: none;
+      font-size: 0.9rem;
+      z-index: 10;
+    }
+    .restore-btn.visible {
+      display: block;
+    }
+    .v-resizer {
+      height: 5px;
+      background: rgba(255,255,255,0.2);
+      cursor: row-resize;
+      user-select: none;
+      transition: background 0.25s;
+      z-index: 10;
+    }
+    .v-resizer:hover {
+      background: rgba(255,255,255,0.4);
+    }
+    #resizer {
+      width: 8px;
+      cursor: ew-resize;
+      background: rgba(255,255,255,0.15);
+      transition: background 0.25s;
+      user-select: none;
+      z-index: 20;
+      border-radius: 4px;
+      margin: 8px 0;
+    }
+    #resizer:hover {
+      background: rgba(255,255,255,0.35);
+    }
+    #right-panel {
+      flex: 1;
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    #right-panel iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 1rem;
+      background: white;
+      flex-grow: 1;
+    }
+    #fullscreen-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: rgba(255,255,255,0.4);
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+      z-index: 10;
+      user-select: none;
+    }
+    #fullscreen-btn:hover {
+      background: rgba(255,255,255,0.7);
+    }
+    #fullscreen-btn img {
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+      user-select: none;
+    }
+    #fullscreen-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: white;
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      border-radius: 0;
+      padding: 0;
+    }
+    #fullscreen-overlay iframe {
+      border-radius: 0;
+      flex-grow: 1;
+      width: 100%;
+      height: 100%;
+    }
+    #close-fullscreen-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 10000;
+      background: rgba(0,0,0,0.4);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 24px;
+      line-height: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    #close-fullscreen-btn:hover {
+      background: rgba(0,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="left-panel">
+      <div class="editor-section" id="html-section">
+        
+        <textarea id="html"></textarea>
+        <button class="restore-btn" id="restore-html">Show HTML</button>
+      </div>
+
+      <div class="v-resizer" data-upper="html-section" data-lower="css-section"></div>
+      <div class="editor-section" id="css-section">
+        <textarea id="css"></textarea>
+        <button class="restore-btn" id="restore-css">Show CSS</button>
+      </div>
+      <div class="v-resizer" data-upper="css-section" data-lower="js-section"></div>
+      <div class="editor-section" id="js-section">
+        <textarea id="js"></textarea>
+        <button class="restore-btn" id="restore-js">Show JS</button>
+      </div>
+    </div>
+    <div id="resizer"></div>
+    <div id="right-panel">
+      <iframe id="preview"></iframe>
+      <button id="fullscreen-btn" title="Fullscreen Preview">
+        <img src="https://cdn-icons-png.freepik.com/512/8373/8373465.png" alt="Fullscreen" />
+      </button>
+    </div>
+  </div>
+
+  <div id="fullscreen-overlay">
+    <button id="close-fullscreen-btn" title="Close Fullscreen">&times;</button>
+    <iframe id="fullscreen-preview"></iframe>
+  </div>
+
+  <script>
+    const html = document.getElementById('html');
+    const css = document.getElementById('css');
+    const js = document.getElementById('js');
+    const preview = document.getElementById('preview');
+
+    const leftPanel = document.getElementById('left-panel');
+    const resizer = document.getElementById('resizer');
+
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+    const fullscreenPreview = document.getElementById('fullscreen-preview');
+    const closeFullscreenBtn = document.getElementById('close-fullscreen-btn');
+
+    html.value = localStorage.getItem('nebuli-html') || '';
+    css.value = localStorage.getItem('nebuli-css') || '';
+    js.value = localStorage.getItem('nebuli-js') || '';
+
+    function updatePreview() {
+      const srcdoc = `
+        <!DOCTYPE html>
+        <html>
+          <head><style>${css.value}</style></head>
+          <body>${html.value}<script>${js.value}<\/script></body>
+        </html>
+      `;
+      preview.srcdoc = srcdoc;
+      fullscreenPreview.srcdoc = srcdoc;
+    }
+
+    function saveToLocalStorage() {
+      localStorage.setItem('nebuli-html', html.value);
+      localStorage.setItem('nebuli-css', css.value);
+      localStorage.setItem('nebuli-js', js.value);
+    }
+
+    [html, css, js].forEach(el => {
+      el.addEventListener('input', () => {
+        updatePreview();
+        saveToLocalStorage();
+      });
+    });
+
+    updatePreview();
+
+    const editors = [
+      { textarea: html, section: document.getElementById('html-section'), button: document.getElementById('restore-html') },
+      { textarea: css, section: document.getElementById('css-section'), button: document.getElementById('restore-css') },
+      { textarea: js, section: document.getElementById('js-section'), button: document.getElementById('restore-js') },
+    ];
+
+    editors.forEach(({textarea, section, button}) => {
+      const observer = new ResizeObserver(entries => {
+        for (const entry of entries) {
+          const h = entry.contentRect.height;
+          if(h < 60) {
+            textarea.style.display = 'none';
+            button.classList.add('visible');
+          } else {
+            textarea.style.display = 'block';
+            button.classList.remove('visible');
+          }
+        }
+      });
+      observer.observe(section);
+
+      button.addEventListener('click', () => {
+        section.style.flexGrow = '1';
+        textarea.style.display = 'block';
+        button.classList.remove('visible');
+      });
+    });
+ resizer.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      document.body.style.userSelect = 'none';
+      let startX = e.clientX;
+      let startWidth = leftPanel.offsetWidth;
+
+      function onMouseMove(e) {
+        let newWidth = startWidth + (e.clientX - startX);
+        const minWidth = 200;
+        const maxWidth = window.innerWidth * 0.85;
+        if(newWidth < minWidth) newWidth = minWidth;
+        if(newWidth > maxWidth) newWidth = maxWidth;
+        leftPanel.style.width = newWidth + 'px';
+      }
+
+      function onMouseUp() {
+        document.body.style.userSelect = '';
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('mouseup', onMouseUp);
+      }
+
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+    });
+
+    const vResizers = document.querySelectorAll('.v-resizer');
+    vResizers.forEach(vResizer => {
+      vResizer.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        document.body.style.userSelect = 'none';
+        const upperSection = document.getElementById(vResizer.dataset.upper);
+        const lowerSection = document.getElementById(vResizer.dataset.lower);
+
+        let startY = e.clientY;
+        let upperStartHeight = upperSection.offsetHeight;
+        let lowerStartHeight = lowerSection.offsetHeight;
+
+        function onMouseMove(e) {
+          let dy = e.clientY - startY;
+          let newUpperHeight = upperStartHeight + dy;
+          let newLowerHeight = lowerStartHeight - dy;
+
+          const minHeight = 50;
+          const maxHeight = window.innerHeight - 150;
+
+          if (newUpperHeight < minHeight || newLowerHeight < minHeight) return;
+          if (newUpperHeight > maxHeight || newLowerHeight > maxHeight) return;
+
+          upperSection.style.flexGrow = '0';
+          upperSection.style.flexBasis = newUpperHeight + 'px';
+
+          lowerSection.style.flexGrow = '0';
+          lowerSection.style.flexBasis = newLowerHeight + 'px';
+        }
+
+        function onMouseUp() {
+          document.body.style.userSelect = '';
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+        }
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+      });
+    });
+ fullscreenBtn.addEventListener('click', () => {
+      fullscreenOverlay.style.display = 'flex';
+    });
+    closeFullscreenBtn.addEventListener('click', () => {
+      fullscreenOverlay.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
