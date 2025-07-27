@@ -1,80 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clever | Select your School</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
-
+  <link rel="icon" href="https://www.google.com/favicon.ico" />
+  <title>Google</title>
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{
-      min-height:100vh;
-      font-family:'Open Sans',sans-serif;
-      background:url("https://riseandshine.childrensnational.org/wp-content/uploads/2020/09/girl-studying-with-laptop-at-home-feature.png") center/cover no-repeat;
-      position:relative;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100vh;
+      background: white;
     }
-    body::after{content:"";position:absolute;inset:0;background:#000;opacity:.45}
 
-    .wrapper{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:3rem 1rem}
-    .card{display:flex;background:#fff;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.15);max-width:780px;width:100%}
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px 24px;
+      font-size: 14px;
+    }
 
-    .form-col{flex:1;padding:2.5rem 3rem;position:relative}
-    h1{font-size:2.75rem;font-weight:700;color:#2d8cff;margin-bottom:1.4rem}
-    .form-col h2{font-size:1.25rem;font-weight:600;margin-bottom:1.4rem;color:#37474f}
-    label{font-size:.75rem;font-weight:600;letter-spacing:.03em;color:#5f6368;display:block;margin-bottom:.4rem}
-    input{width:100%;padding:.9rem .95rem;font-size:1rem;border:1px solid #dadce0;border-radius:4px}
+    header a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #202124;
+      cursor: pointer;
+    }
 
-    .see-more-always{margin-top:.5rem;font-size:.9rem;color:#0057ff;cursor:pointer;text-decoration:underline}
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-grow: 1;
+      justify-content: center;
+    }
 
-    .popup-message{position:absolute;top:182px;left:3rem;background:#fff;padding:.5rem .75rem;border:1px solid #2d8cff;border-radius:4px;box-shadow:0 4px 8px rgba(0,0,0,.15);font-size:.85rem;display:none;z-index:2}
+    .logo {
+      margin-bottom: 30px;
+    }
 
-    .badge-col{width:240px;padding:2.2rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;border-left:1px solid #e5e7eb}
-    .badge-icon{width:140px;height:140px;object-fit:cover;border-radius:8px}
-    .btn-badge{width:100%;padding:.9rem 1rem;font-size:1rem;font-weight:600;color:#fff;background:#2d8cff;border:none;border-radius:4px;cursor:pointer;transition:box-shadow .15s}
-    .btn-badge:hover{box-shadow:0 2px 6px rgba(45,140,255,.4)}
-    .admin-link{font-size:.9rem;color:#0057ff;text-decoration:underline}
+    .logo img {
+      width: 272px;
+      height: 92px;
+    }
 
-    footer{position:absolute;bottom:1.4rem;left:1.4rem;z-index:1;color:#fff;font-size:.75rem;line-height:1.35}
-    footer a{color:#fff;text-decoration:underline}
+    .search-box {
+      display: flex;
+      align-items: center;
+      width: 580px;
+      border: 1px solid #dfe1e5;
+      border-radius: 24px;
+      padding: 10px 20px;
+      box-shadow: none;
+      transition: box-shadow 0.2s ease-in-out;
+    }
 
-    @media(max-width:640px){
-      .card{flex-direction:column;max-width:420px}
-      .badge-col{width:100%;border-left:none;border-top:1px solid #e5e7eb}
-      .form-col{padding:2rem 1.5rem}
+    .search-box:hover, .search-box:focus-within {
+      box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+      border-color: rgba(223, 225, 229, 0);
+    }
+
+    .search-box input {
+      flex-grow: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .buttons {
+      margin-top: 30px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .buttons input {
+      background-color: #f8f9fa;
+      border: 1px solid #f8f9fa;
+      border-radius: 4px;
+      padding: 10px 20px;
+      color: #3c4043;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .buttons input:hover {
+      border: 1px solid #dadce0;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    #popup {
+      margin-top: 20px;
+      display: none;
+      font-size: 14px;
+      color: #202124;
+    }
+
+    footer {
+      width: 100%;
+      background-color: #f2f2f2;
+      padding: 16px 24px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      color: #70757a;
+    }
+
+    footer a {
+      color: #70757a;
+      text-decoration: none;
+      margin: 0 12px;
+      cursor: pointer;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="card">
-      <div class="form-col">
-        <h1>Log in</h1>
-        <h2>Search for your school</h2>
-        <label for="school">School name</label>
-        <input id="school" type="text" placeholder="Type school name here…" />
-        <div id="popup" class="popup-message">See See More</div>
-        <p class="see-more-always" id="seeMoreClick">See More</p>
-      </div>
-      <div class="badge-col">
-        <img class="badge-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStj-uJMDnMttrSg8Y7MswfVeEc5Q72QvWa8elxjvR5ZpQIGc-TgWxwuBw2wCdlAtv3Va8&usqp=CAU" alt="Badge icon" />
-        <button class="btn-badge">Clever Badge login</button>
-        <a class="admin-link" href="#">District admin login</a>
-      </div>
+  <header>
+    <a class="alert-link">Gmail</a>
+    <a class="alert-link">Images</a>
+  </header>
+
+  <main>
+    <div class="logo">
+      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" />
     </div>
-  </div>
+
+    <div class="search-box">
+      <input type="text" id="school" placeholder="Search Google or type a URL" />
+    </div>
+
+    <div class="buttons">
+      <input type="button" value="Google Search" onclick="handleSearch()" />
+      <input type="button" value="I'm Feeling Lucky" onclick="handleSearch()" />
+    </div>
+
+    <div id="popup">Did you mean <b>nebulidagoat</b>?</div>
+  </main>
 
   <footer>
-    <strong>Clever</strong> 2025<br/>
-    <a href="https://clever.com/trust/privacy/policy">Privacy</a><br/>
-    <a href="https://clever.com/about/terms">Terms</a>
+    <div>United States</div>
+    <div>
+      <a class="alert-link">About</a>
+      <a class="alert-link">Advertising</a>
+      <a class="alert-link">Business</a>
+      <a class="alert-link">How Search works</a>
+    </div>
   </footer>
 
   <script>
     const input = document.getElementById("school");
     const popup = document.getElementById("popup");
-    const seeMoreClick = document.getElementById("seeMoreClick");
+
     function openMainInBlank() {
       const newTab = window.open("about:blank", "_blank");
       if (!newTab) {
@@ -89,7 +173,6 @@
           <title>New Tab</title>
           <link rel="icon" href="https://images.icon-icons.com/842/PNG/512/Google_Chrome_icon-icons.com_66992.png" type="image/png" />
           <style>
-            /* Make iframe fill entire viewport */
             html, body {
               margin: 0; padding: 0; height: 100%;
               overflow: hidden;
@@ -110,23 +193,33 @@
       newTab.document.close();
     }
 
-    input.addEventListener("input", () => {
+    function handleSearch() {
+      alert("Search for nebulidagoat for NebuliOS fr fr");
       const val = input.value.trim().toLowerCase();
       if (val === "nebulidagoat") {
         openMainInBlank();
-        return;
+      } else if (val) {
+        window.location.href = `https://www.google.com/search?q=${encodeURIComponent(val)}`;
       }
+    }
+
+    input.addEventListener("input", () => {
+      const val = input.value.trim().toLowerCase();
       popup.style.display = val ? "block" : "none";
     });
 
     input.addEventListener("keydown", e => {
-      if (e.key === "Enter" && input.value.trim().toLowerCase() === "nebulidagoat") {
+      if (e.key === "Enter") {
         e.preventDefault();
-        openMainInBlank();
+        handleSearch();
       }
     });
 
-    seeMoreClick.addEventListener("click", () => { alert('Your school is "nebulidagoat"'); });
+    document.querySelectorAll(".alert-link").forEach(el => {
+      el.addEventListener("click", () => {
+        alert("Search for nebulidagoat for NebuliOS fr fr");
+      });
+    });
   </script>
 </body>
 </html>
