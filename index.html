@@ -2,7 +2,7 @@
 <html lang="en">
 <head> 
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
   <link rel="icon" href="https://www.google.com/favicon.ico" />
   <title>Google</title>
   <style>
@@ -11,9 +11,7 @@
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      height: 100vh;
+      min-height: 100vh;
       background: white;
     }
 
@@ -36,8 +34,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      flex-grow: 1;
       justify-content: center;
+      flex-grow: 1;
     }
 
     .logo {
@@ -99,34 +97,9 @@
       font-size: 14px;
       color: #202124;
     }
-
-    footer {
-      width: 100%;
-      background-color: #f2f2f2;
-      padding: 16px 24px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-      color: #70757a;
-    }
-
-    footer a {
-      color: #70757a;
-      text-decoration: none;
-      margin: 0 12px;
-      cursor: pointer;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
-  <header>
-    <a class="alert-link">Gmail</a>
-    <a class="alert-link">Images</a>
-  </header>
 
   <main>
     <div class="logo">
@@ -144,17 +117,7 @@
 
     <div id="popup">Did you mean <b>nebulidagoat</b>?</div>
   </main>
-
-  <footer>
-    <div>United States</div>
-    <div>
-      <a class="alert-link">About</a>
-      <a class="alert-link">Advertising</a>
-      <a class="alert-link">Business</a>
-      <a class="alert-link">How Search works</a>
-    </div>
-  </footer>
-
+  
   <script>
     const input = document.getElementById("school");
     const popup = document.getElementById("popup");
@@ -194,18 +157,19 @@
     }
 
     function handleSearch() {
-      alert("Search for nebulidagoat for NebuliOS fr fr");
       const val = input.value.trim().toLowerCase();
       if (val === "nebulidagoat") {
+        popup.style.display = "none";
         openMainInBlank();
       } else if (val) {
+        popup.style.display = "block";
         window.location.href = `https://www.google.com/search?q=${encodeURIComponent(val)}`;
       }
     }
 
     input.addEventListener("input", () => {
       const val = input.value.trim().toLowerCase();
-      popup.style.display = val ? "block" : "none";
+      popup.style.display = val && val !== "nebulidagoat" ? "block" : "none";
     });
 
     input.addEventListener("keydown", e => {
