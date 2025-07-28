@@ -202,26 +202,24 @@
   .panel.active {
     display: block;
   }
-  .taskbar {
-    position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 24px;
-    background: rgba(255 255 255 / 0.12);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 48px;
-    padding: 12px 32px;
-    box-shadow:
-      inset 0 1px 0 rgba(255 255 255 / 0.35),
-      0 10px 30px rgba(0, 0, 0, 0.5);
-    width: fit-content;
-    user-select: none;
-    overflow: visible;
-    z-index: 10;
-  }
+.taskbar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(240, 240, 240, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 18px;
+  z-index: 1000;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
   .taskbar::before {
     content: "";
     position: absolute;
@@ -242,28 +240,20 @@
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
   }
-  .taskbar-button {
-    width: 56px;
-    height: 56px;
-    background: rgba(255 255 255 / 0.18);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    color: #fff;
-    box-shadow:
-      0 4px 6px rgba(255 255 255 / 0.15),
-      inset 0 -4px 6px rgba(255 255 255 / 0.3),
-      inset 0 6px 12px rgba(0 0 0 / 0.4);
+  .taskbar button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 10px;
     cursor: pointer;
-    transition:
-      background 0.3s ease,
-      box-shadow 0.3s ease,
-      transform 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: relative;
-    overflow: hidden;
-    z-index: 15;
   }
   .taskbar-button::before {
     content: "";
@@ -278,17 +268,18 @@
     border-radius: 50%;
     pointer-events: none;
   }
-  .taskbar-button:hover {
-    background: rgba(255 255 255 / 0.35);
-    box-shadow:
-      0 8px 16px rgba(255 255 255 / 0.4),
-      inset 0 -6px 8px rgba(255 255 255 / 0.5),
-      inset 0 8px 16px rgba(0 0 0 / 0.5);
-    transform: scale(1.1);
+   .taskbar button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
   }
-  .taskbar-button:hover::before {
+  .taskbar button:hover::before {
     opacity: 1;
   }
+  .taskbar img {
+      width: 24px;
+      height: 24px;
+      filter: none;
+    }
   #minimizeBubble {
     position: fixed;
     bottom: 100px;
@@ -339,8 +330,8 @@
     -webkit-text-fill-color: transparent;
     animation: shimmer 3s linear infinite;
     z-index: 100;
-    user-select: none;
-    pointer-events: none;
+    user-select: text;
+    pointer-events: auto;
     text-transform: lowercase;
     letter-spacing: 0.1em;
   }
@@ -360,9 +351,9 @@
     color: white;
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    user-select: none;
+    user-select: text;
     z-index: 99;
-    pointer-events: none;
+    pointer-events: auto;
   }
   #centerTime {
     font-size: 72px;
@@ -375,8 +366,6 @@
     font-weight: 400;
     letter-spacing: 0.05em;
   }
-
-  /* Custom resize handle bottom right */
   #resize-handle {
     position: absolute;
     width: 20px;
@@ -408,11 +397,15 @@
     </div>
   </div>
   <div id="header">
-    <button id="backBtn" class="nav-btn" title="Back" disabled aria-label="Back">◀</button>
-    <button id="forwardBtn" class="nav-btn" title="Forward" disabled aria-label="Forward">▶</button>
+    <button id="backBtn" class="nav-btn" title="Back" disabled aria-label="Back">
+      <img src="https://nebulilabs.github.io/NebuliOS/icons/arrow_back.png" alt="◀" style="width:16px; height:16px;" />
+    </button>
+    <button id="forwardBtn" class="nav-btn" title="Forward" disabled aria-label="Forward">
+      <img src="https://nebulilabs.github.io/NebuliOS/icons/arrow_forward.png" alt="▶" style="width:16px; height:16px;" />
+    </button>
     <button id="reloadBtn" class="nav-btn" title="Reload" aria-label="Reload page">⟳</button>
-    <input id="urlInput" type="text" placeholder="Search or enter URL" autocomplete="off" spellcheck="false" aria-label="Address and search bar" />
-    <div id="newTab" style="padding:0 12px;font-size:20px;line-height:28px;cursor:pointer" title="New Tab" role="button" tabindex="0" aria-label="Open new tab">+</div>
+    <input id="urlInput" type="text" placeholder="Search or enter URL" />
+    <div id="newTab" title="New Tab" role="button" tabindex="0" aria-label="New Tab">+</div>
   </div>
   <div id="view" role="main" aria-live="polite"></div>
   <div id="resize-handle" aria-label="Resize omnibox" role="separator" tabindex="0" title="Resize"></div>
@@ -427,12 +420,22 @@
   <div id="centerBattery">Battery: N/A</div>
 </div>
 
-<div class="taskbar" aria-label="Liquid Glass Taskbar">
-  <div class="taskbar-button" id="browserBtn" title="Internet" role="button" tabindex="0" aria-label="Open Internet">🌐</div>
-  <div class="taskbar-button" id="gamesBtn" title="Games" role="button" tabindex="0" aria-label="Open Games">🎮</div>
-  <div class="taskbar-button" id="toolsBtn" title="Tools" role="button" tabindex="0" aria-label="Open Tools">🛠️</div>
-  <div class="taskbar-button" id="settingsBtn" title="Settings" role="button" tabindex="0" aria-label="Open Settings">⚙️</div>
-  <div class="taskbar-button" id="moreBtn" title="More" role="button" tabindex="0" aria-label="Open More">➕</div>
+<div class="taskbar">
+  <button id="browserBtn" title="Internet" aria-label="Internet">
+    <img src="https://nebulilabs.github.io/NebuliOS/icons/internet.png" alt="Internet" />
+  </button>
+  <button id="gamesBtn" title="Games" aria-label="Games">
+    <img src="https://nebulilabs.github.io/NebuliOS/icons/games.png" alt="Games" />
+  </button>
+  <button id="toolsBtn" title="Tools" aria-label="Tools">
+    <img src="https://nebulilabs.github.io/NebuliOS/icons/tools.png" alt="Tools" />
+  </button>
+  <button id="settingsBtn" title="Settings" aria-label="Settings">
+    <img src="https://nebulilabs.github.io/NebuliOS/icons/settings.png" alt="Settings" />
+  </button>
+  <button id="moreBtn" title="More" aria-label="More">
+    <img src="https://nebulilabs.github.io/NebuliOS/icons/plus.png" alt="More" />
+  </button>
 </div>
 
 <script>
@@ -440,22 +443,26 @@
   const tabs = document.getElementById('tabs');
   const resizeHandle = document.getElementById('resize-handle');
   let dragging = false;
-  let offsetX = 0, offsetY = 0;
+  let dragOffsetX = 0, dragOffsetY = 0;
 
   tabs.addEventListener('pointerdown', e => {
     if (e.target.tagName !== 'INPUT' && !e.target.classList.contains('tab-close')) {
       dragging = true;
-      offsetX = e.clientX - wrapper.offsetLeft;
-      offsetY = e.clientY - wrapper.offsetTop;
+      const rect = wrapper.getBoundingClientRect();
+      dragOffsetX = e.clientX - rect.left;
+      dragOffsetY = e.clientY - rect.top;
       tabs.style.cursor = 'grabbing';
+
+      wrapper.style.transform = 'none';
+
       e.preventDefault();
     }
   });
 
   document.addEventListener('pointermove', e => {
     if (!dragging) return;
-    let newLeft = e.clientX - offsetX;
-    let newTop = e.clientY - offsetY;
+    let newLeft = e.clientX - dragOffsetX;
+    let newTop = e.clientY - dragOffsetY;
     const maxLeft = window.innerWidth - wrapper.offsetWidth;
     const maxTop = window.innerHeight - wrapper.offsetHeight;
     if (newLeft < 0) newLeft = 0;
@@ -780,6 +787,7 @@
       minimizeBubble.style.display = 'none';
     }
   });
+
   const trafficClose = document.querySelector('.close');
   const trafficMin = document.querySelector('.min');
   const trafficMax = document.querySelector('.max');
@@ -937,7 +945,7 @@
 
   initStars();
   animateStars();
-
 </script>
+
 </body>
 </html>
