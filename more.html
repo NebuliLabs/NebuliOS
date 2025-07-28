@@ -1,226 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> 
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>nebuliOS - More</title>
+  <title>NebuliOS - More</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
     body {
       background: linear-gradient(135deg, #1e1e2f, #0a0a12);
       height: 100vh;
-      color: #fff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      user-select: none;
-      overflow: hidden;
-    }
-
-    #container {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      width: 360px;
-      padding: 20px;
-      background: rgba(255 255 255 / 0.08);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
-      box-shadow:
-        inset 0 1px 0 rgba(255 255 255 / 0.35),
-        0 10px 30px rgba(0,0,0,0.7);
-      user-select: none;
-    }
-
-    .top-row {
-      display: flex;
       gap: 20px;
+      padding: 40px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    button {
-      flex: 1;
-      background: linear-gradient(90deg, #9c27b0, #ffd600);
-      color: black;
-      border: none;
+    .button {
+      position: relative;
+      background: rgba(255 255 255 / 0.12);
+      border: 1.5px solid rgba(255 255 255 / 0.25);
+      color: white;
+      padding: 15px 36px;
+      font-size: 16px;
       border-radius: 12px;
-      padding: 18px 12px;
-      font-size: 1.25rem;
-      font-weight: 700;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
       user-select: none;
-      transition: background 0.3s ease, transform 0.15s ease;
-      text-transform: lowercase;
-      letter-spacing: 0.05em;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       box-shadow:
-        0 4px 10px rgba(255 214 0, 0.4),
-        inset 0 -4px 8px rgba(156, 39, 176, 0.6);
-    }
-    button:hover {
-      background: linear-gradient(90deg, #ffd600, #9c27b0);
-      transform: scale(1.05);
-      box-shadow:
-        0 6px 14px rgba(255 214 0, 0.7),
-        inset 0 -6px 12px rgba(156, 39, 176, 0.8);
-    }
-    button:active {
-      transform: scale(0.98);
+        inset 0 1px 0 rgba(255 255 255 / 0.4),
+        0 8px 20px rgba(0, 0, 0, 0.7);
+      transition:
+        transform 0.25s ease,
+        background-color 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
     }
 
-    .bottom-row {
-      display: flex;
-      justify-content: center;
-    }
-    .bottom-row button {
-      width: 100%;
-      max-width: 360px;
+    .button::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -40%;
+      width: 180%;
+      height: 180%;
+      background: linear-gradient(45deg, #ffd600, #9c27b0, #ffd600);
+      background-size: 150% 150%;
+      border-radius: 16px;
+      filter: blur(12px);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: -1;
+      animation: shimmer 4s linear infinite;
     }
 
-    #popupOverlay {
+    .button:hover {
+      transform: scale(1.1);
+      background: rgba(255 255 255 / 0.2);
+      border-color: rgba(255 255 255 / 0.5);
+      box-shadow:
+        inset 0 2px 4px rgba(255 255 255 / 0.5),
+        0 12px 36px rgba(156, 39, 176, 0.7);
+    }
+
+    .button:hover::before {
+      opacity: 0.15;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 100% 0;
+      }
+      100% {
+        background-position: -100% 0;
+      }
+    }
+
+    .popup-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background: rgba(0, 0, 0, 0.6);
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
-      user-select: text;
+      z-index: 999;
     }
 
-    #popupBox {
-      background: rgba(255 255 255 / 0.12);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 16px;
-      padding: 24px 28px;
-      width: 320px;
-      color: #fff;
-      font-size: 1rem;
-      box-shadow:
-        inset 0 1px 0 rgba(255 255 255 / 0.4),
-        0 6px 12px rgba(156 39 176 / 0.6);
-      user-select: text;
+    .popup {
+      background: #1e1e2f;
+      color: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      text-align: center;
       position: relative;
-      text-align: left;
-      white-space: pre-wrap;
-      line-height: 1.3;
-
-      margin: 0;
-    }
-    #popupBox > * {
-      margin: 0;
-      padding: 0;
     }
 
-    #popupBox h2 {
-      color: #ffd600;
-      font-weight: 700;
-      text-transform: lowercase;
-      font-size: 1.2rem;
-      margin-bottom: 4px;
-      line-height: 1.1;
-      user-select: none;
+    .popup button {
+      margin-top: 20px;
+      background: rgba(255 255 255 / 0.12);
+      border: 1px solid rgba(255 255 255 / 0.25);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
-    #popupContent {
-      font-size: 1rem;
-      line-height: 1.3;
-      white-space: pre-wrap;
-    }
-
-    #popupCloseBtn {
+    .popup-close {
       position: absolute;
       top: 10px;
-      right: 14px;
-      font-size: 20px;
-      font-weight: 700;
-      color: #ffd600;
-      background: transparent;
+      right: 15px;
+      background: none;
       border: none;
+      color: white;
+      font-size: 18px;
       cursor: pointer;
-      user-select: none;
-      transition: color 0.3s ease;
-    }
-    #popupCloseBtn:hover {
-      color: #fff;
     }
   </style>
 </head>
 <body>
-  <div id="container">
-    <div class="top-row">
-      <button id="creditsBtn" type="button" aria-label="Open credits popup">credits</button>
-      <button id="linksBtn" type="button" aria-label="Open links popup">links</button>
-    </div>
-    <div class="bottom-row">
-      <button id="discordBtn" type="button" aria-label="Open Discord server">discord server</button>
-    </div>
+
+<a href="#" class="button" onclick="openPopup()">Credits</a>
+<a href="https://drive.usercontent.google.com/u/0/uc?id=1LOlTrDMniZ6riT6NvMfPffk81tWnYCkh&export=download" class="button">NebuliOS Mini</a>
+<a href="https://discord.gg/z4ZJnK2x7S" class="button">Discord</a>
+
+<div class="popup-overlay" id="popup">
+  <div class="popup">
+    <button class="popup-close" onclick="closePopup()">×</button>
+    <h2>Credits</h2>
+    <p>A special thanks to NebuLord,the main dev, to Technoyte for inspiration/help and to the community (idk)</p>
+
   </div>
+</div>
 
-  <div id="popupOverlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle" aria-describedby="popupContent">
-    <div id="popupBox">
-      <button id="popupCloseBtn" aria-label="Close popup">×</button>
-      <h2 id="popupTitle"></h2>
-      <div id="popupContent"></div>
-    </div>
-  </div>
+<script>
+  function openPopup() {
+    document.getElementById('popup').style.display = 'flex';
+  }
 
-  <script>
-    const popupOverlay = document.getElementById('popupOverlay');
-    const popupBox = document.getElementById('popupBox');
-    const popupTitle = document.getElementById('popupTitle');
-    const popupContent = document.getElementById('popupContent');
-    const popupCloseBtn = document.getElementById('popupCloseBtn');
+  function closePopup() {
+     document.getElementById('popup').style.display = 'none';
+  }
+</script>
 
-    const creditsText = `Aquanix - Main Dev
-    PlayerVPN - Proxy Help (Dev)
-    Technoyte - Inspiration/Help
-    Community - Idk`;
-
-    const linksText = `https://nebulilabs.github.io/NebuliOS/`;
-
-    function openPopup(title, content) {
-      popupTitle.textContent = title;
-      popupContent.textContent = content;
-      popupOverlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closePopup() {
-      popupOverlay.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('creditsBtn').addEventListener('click', () => {
-      openPopup('credits', creditsText);
-    });
-
-    document.getElementById('linksBtn').addEventListener('click', () => {
-      openPopup('links', linksText);
-    });
-
-    document.getElementById('discordBtn').addEventListener('click', () => {
-      window.open('https://discord.gg/z4ZJnK2x7S', '_blank', 'noopener');
-    });
-
-    popupCloseBtn.addEventListener('click', closePopup);
-
-    popupOverlay.addEventListener('click', e => {
-      if (e.target === popupOverlay) {
-        closePopup();
-      }
-    });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && popupOverlay.style.display === 'flex') {
-        closePopup();
-      }
-    });
-  </script>
 </body>
 </html>
