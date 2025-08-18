@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -55,16 +55,25 @@
     height: 32px;
     overflow: visible;
   }
-  #tabs {
-    display: flex;
-    align-items: center;
-    background: #dcdcdc;
-    height: 32px;
-    cursor: grab;
-    user-select: none;
-    z-index: 106;
-    flex-shrink: 0;
-  }
+#tabs {
+  display: flex;
+  align-items: center;
+  background: rgba(238, 238, 238, 0.2);
+  height: 32px;
+  cursor: grab;
+  user-select: none;
+  z-index: 106;
+  flex-shrink: 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px 16px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: background 0.3s ease;
+}
+  #tabs::-webkit-scrollbar {
+  display: none;
+}
   #tabs:active {
     cursor: grabbing;
   }
@@ -88,25 +97,35 @@
   .max {
     background: #00ca4e;
   }
-  .tab {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 8px;
-    cursor: pointer;
-    border-right: 1px solid #b8b8b8;
-    user-select: none;
-    font-size: 14px;
-    background: #eee;
-    position: relative;
-    width: auto;
-    min-width: 50px;
-    justify-content: center;
-    z-index: 107;
-  }
-  .tab.active {
-    background: #ffffff;
-  }
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-right: 1px solid #b8b8b8;
+  user-select: none;
+  font-size: 14px;
+  background: rgba(238, 238, 238, 0.6);
+  position: relative;
+  width: auto;
+  min-width: 50px;
+  justify-content: center;
+  z-index: 107;
+
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  margin: 0 4px;
+  transition: background 0.3s ease;
+}
+
+.tab.active {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: #999;
+}
   .tab-close {
     display: none;
     position: absolute;
@@ -119,9 +138,7 @@
     color: #900;
     font-size: 16px;
     user-select: none;
-  }
-  .tab:hover .favicon {
-    display: none;
+
   }
   .tab:hover .tab-close {
     display: block;
@@ -139,17 +156,22 @@
     text-overflow: ellipsis;
     user-select: none;
   }
-  #header {
-    height: var(--box-h);
-    background: var(--bar);
-    display: flex;
-    align-items: center;
-    padding: 0 14px;
-    gap: 10px;
-    transition: opacity 0.3s ease;
-    z-index: 108;
-    flex-shrink: 0;
-  }
+#header {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0;
+  padding: 10px 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: var(--box-h);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 0.3s ease;
+  z-index: 108;
+  flex-shrink: 0;
+}
   #wrapper.minimized #header {
     opacity: 0;
     pointer-events: none;
@@ -198,28 +220,29 @@
     border: none;
     display: none;
     background: white;
+    z-index: 1;
   }
   .panel.active {
     display: block;
   }
-.taskbar {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(240, 240, 240, 0.15);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 24px;
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  padding: 10px 18px;
-  z-index: 1000;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-}
+  .taskbar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(240, 240, 240, 0.15);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    padding: 10px 18px;
+    z-index: 1000;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+  }
   .taskbar::before {
     content: "";
     position: absolute;
@@ -253,7 +276,6 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    position: relative;
   }
   .taskbar-button::before {
     content: "";
@@ -268,25 +290,25 @@
     border-radius: 50%;
     pointer-events: none;
   }
-   .taskbar button:hover {
+  .taskbar button:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
   }
-  .taskbar button:hover::before {
+  .taskbar-button:hover::before {
     opacity: 1;
   }
   .taskbar img {
-      width: 24px;
-      height: 24px;
-      filter: none;
-    }
+    width: 24px;
+    height: 24px;
+    filter: none;
+  }
   #minimizeBubble {
     position: fixed;
     bottom: 100px;
     right: 40px;
     width: 64px;
     height: 64px;
-    background: rgba(255 255 255 / 0.12);
+    background: rgba(255 255 255 / 0.3);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 50%;
@@ -330,8 +352,8 @@
     -webkit-text-fill-color: transparent;
     animation: shimmer 3s linear infinite;
     z-index: 100;
-    user-select: text;
-    pointer-events: auto;
+    user-select: none;
+    pointer-events: none;
     text-transform: lowercase;
     letter-spacing: 0.1em;
   }
@@ -351,9 +373,9 @@
     color: white;
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    user-select: text;
+    user-select: none;
     z-index: 99;
-    pointer-events: auto;
+    pointer-events: none;
   }
   #centerTime {
     font-size: 72px;
@@ -366,6 +388,7 @@
     font-weight: 400;
     letter-spacing: 0.05em;
   }
+
   #resize-handle {
     position: absolute;
     width: 20px;
@@ -381,6 +404,44 @@
     background-size: 10px 10px;
     z-index: 120;
     user-select: none;
+  }
+
+  #settingsPopup {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    background: rgba(255 255 255 / 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255 255 255, 0.3);
+    border-radius: 12px;
+    padding: 12px 16px;
+    width: 180px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    display: none;
+    z-index: 3000;
+    font-size: 14px;
+    color: #111;
+  }
+
+
+  #settingsPopup label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  #settingsPopup select {
+    border-radius: 6px;
+    border: 1px solid #999;
+    padding: 4px 8px;
+    font-size: 14px;
+    background: white;
+  }
+
+  #settingsPopup input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
   }
 </style>
 </head>
@@ -402,10 +463,27 @@
     </button>
     <button id="forwardBtn" class="nav-btn" title="Forward" disabled aria-label="Forward">
       <img src="https://nebulilabs.github.io/NebuliOS/icons/arrow_forward.png" alt="▶" style="width:16px; height:16px;" />
-    </button>
+    </button> 
     <button id="reloadBtn" class="nav-btn" title="Reload" aria-label="Reload page">⟳</button>
     <input id="urlInput" type="text" placeholder="Search or enter URL" />
-    <div id="newTab" title="New Tab" role="button" tabindex="0" aria-label="New Tab">+</div>
+    <div id="newTab" title="New Tab" tabindex="0" style="user-select:none; cursor:pointer; font-weight:700; font-size:22px; line-height:1; padding:0 8px;">+</div>
+    <button id="settingsMiniBtn" title="Settings" aria-label="Open settings popup" style="background:transparent; border:none; padding:0; margin-left:4px; cursor:pointer;">
+      <img src="https://nebulilabs.github.io/NebuliOS/icons/settings.png" alt="Settings" style="width:20px; height:20px;" />
+    </button>
+<div id="settingsPopup" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" tabindex="-1">
+  <div id="settingsTitle" style="font-weight:bold; margin-bottom: 8px;">Settings</div>
+  <label for="themeSelect">
+    Theme:
+    <select id="themeSelect" aria-describedby="themeDesc">
+      <option value="Ultraviolet">Ultraviolet</option>
+      <option value="Scramjet">Scramjet</option>
+    </select>
+  </label>
+  <label for="tabAnchorCheckbox" style="justify-content: space-between;">
+    <span>Tab anchor (confirm close):</span>
+    <input type="checkbox" id="tabAnchorCheckbox" />
+  </label>
+</div>
   </div>
   <div id="view" role="main" aria-live="polite"></div>
   <div id="resize-handle" aria-label="Resize omnibox" role="separator" tabindex="0" title="Resize"></div>
@@ -418,22 +496,20 @@
 <div id="centerTextContainer" aria-live="polite" aria-label="Current time and battery level">
   <div id="centerTime">00:00:00</div>
   <div id="centerBattery">Battery: N/A</div>
-    <div id="custom-text">TIP: use ctrl +/- to adjust your viewing of the OS!</div>
 </div>
+
 <div class="taskbar">
-  <button id="browserBtn" title="Internet" aria-label="Internet">
+  <button id="browserBtn" title="Internet">
     <img src="https://nebulilabs.github.io/NebuliOS/icons/internet.png" alt="Internet" />
   </button>
-  <button id="gamesBtn" title="Games" aria-label="Games">
+  <button id="gamesBtn" title="Games">
     <img src="https://nebulilabs.github.io/NebuliOS/icons/games.png" alt="Games" />
   </button>
-  <button id="toolsBtn" title="Tools" aria-label="Tools">
+  <button id="toolsBtn" title="Tools">
     <img src="https://nebulilabs.github.io/NebuliOS/icons/tools.png" alt="Tools" />
   </button>
-  <button id="settingsBtn" title="Settings" aria-label="Settings">
-    <img src="https://nebulilabs.github.io/NebuliOS/icons/settings.png" alt="Settings" />
-  </button>
-  <button id="moreBtn" title="More" aria-label="More">
+  
+  <button id="moreBtn" title="More">
     <img src="https://nebulilabs.github.io/NebuliOS/icons/plus.png" alt="More" />
   </button>
 </div>
@@ -442,6 +518,7 @@
   const wrapper = document.getElementById('wrapper');
   const tabs = document.getElementById('tabs');
   const resizeHandle = document.getElementById('resize-handle');
+  const minimizeBubble = document.getElementById('minimizeBubble');
   let dragging = false;
   let dragOffsetX = 0, dragOffsetY = 0;
 
@@ -514,7 +591,6 @@
   const reloadBtn = document.getElementById('reloadBtn');
   const urlInput = document.getElementById('urlInput');
   const newTabBtn = document.getElementById('newTab');
-  const minimizeBubble = document.getElementById('minimizeBubble');
 
   let histories = {};
   let tabCounter = 0;
@@ -740,12 +816,9 @@
     }
   });
 
-  addTab('/NebuliOS/search.html', 'New Tab', 'nebuli://search');
-
   const browserBtn = document.getElementById('browserBtn');
   const gamesBtn = document.getElementById('gamesBtn');
   const toolsBtn = document.getElementById('toolsBtn');
-  const settingsBtn = document.getElementById('settingsBtn');
   const moreBtn = document.getElementById('moreBtn');
 
   browserBtn.addEventListener('click', () => {
@@ -766,14 +839,6 @@
 
   toolsBtn.addEventListener('click', () => {
     addTab('/NebuliOS/tools.html', 'Tools', 'nebuli://tools');
-    if (wrapper.style.display === 'none') {
-      wrapper.style.display = 'flex';
-      minimizeBubble.style.display = 'none';
-    }
-  });
-
-  settingsBtn.addEventListener('click', () => {
-    addTab('/NebuliOS/settings.html', 'Settings', 'nebuli://settings');
     if (wrapper.style.display === 'none') {
       wrapper.style.display = 'flex';
       minimizeBubble.style.display = 'none';
@@ -945,6 +1010,64 @@
 
   initStars();
   animateStars();
+
+  const settingsMiniBtn = document.getElementById('settingsMiniBtn');
+  const settingsPopup = document.getElementById('settingsPopup');
+  const themeSelect = document.getElementById('themeSelect');
+  const tabAnchorCheckbox = document.getElementById('tabAnchorCheckbox');
+
+  function saveSettings() {
+    localStorage.setItem('nebuli-theme', themeSelect.value);
+    localStorage.setItem('nebuli-tabAnchor', tabAnchorCheckbox.checked ? 'true' : 'false');
+  }
+
+  function loadSettings() {
+    const theme = localStorage.getItem('nebuli-theme');
+    if (theme && (theme === 'Ultraviolet' || theme === 'Scramjet')) {
+      themeSelect.value = theme;
+    } else {
+      themeSelect.value = 'Ultraviolet';
+    }
+
+    const tabAnchor = localStorage.getItem('nebuli-tabAnchor');
+    tabAnchorCheckbox.checked = tabAnchor === 'true';
+  }
+
+  loadSettings();
+
+  themeSelect.addEventListener('change', () => {
+    saveSettings();
+  });
+
+  tabAnchorCheckbox.addEventListener('change', () => {
+    saveSettings();
+  });
+
+settingsMiniBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  settingsPopup.style.display = settingsPopup.style.display === 'block' ? 'none' : 'block';
+});
+document.addEventListener('click', e => {
+  if (!settingsPopup.contains(e.target) && e.target !== settingsMiniBtn) {
+    settingsPopup.style.display = 'none';
+  }
+});
+
+
+
+  document.addEventListener('click', e => {
+    if (!settingsPopup.contains(e.target) && e.target !== settingsMiniBtn) {
+      settingsPopup.style.display = 'none';
+    }
+  });
+
+  window.addEventListener('beforeunload', e => {
+    const tabAnchor = localStorage.getItem('nebuli-tabAnchor');
+    if (tabAnchor === 'true') {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
 </script>
 
 </body>
