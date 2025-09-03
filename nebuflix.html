@@ -208,7 +208,7 @@ iframe {
 </div>
 
 <script>
-const apiKey = "832be0e3"; // It's a free key. There is absolutly no need to steal from me 💀 just go to http://www.omdbapi.com
+const apiKey = "832be0e3"; // It's a free key. There is absolutly no need to steal from me 💀 just go to https://www.omdbapi.com
 const searchBox = document.getElementById("searchBox");
 const results = document.getElementById("results");
 const player = document.getElementById("player");
@@ -241,7 +241,7 @@ async function searchMovies() {
   player.innerHTML = "";
   updatePlaceholder();
   const query = searchBox.value;
-  const url = `http://www.omdbapi.com/?apikey=${apiKey}&s=${encodeURIComponent(query)}`;
+  const url = `https://www.omdbapi.com/?apikey=${apiKey}&s=${encodeURIComponent(query)}`;
   const res = await fetch(url);
   const data = await res.json();
   results.innerHTML = "";
@@ -288,7 +288,7 @@ async function openShow(id) {
 async function loadSeason(season) {
   seasonTitle.textContent = `Season ${season}`;
   episodeList.innerHTML = "Loading episodes...";
-  const url = `http://www.omdbapi.com/?apikey=${apiKey}&i=${currentShowId}&Season=${season}`;
+  const url = `https://www.omdbapi.com/?apikey=${apiKey}&i=${currentShowId}&Season=${season}`;
   const res = await fetch(url);
   const data = await res.json();
   if (data.Episodes) {
