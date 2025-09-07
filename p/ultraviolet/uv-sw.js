@@ -1,4 +1,4 @@
-importScripts("/s/uv/uv.sw.js");
+importScripts("/NebuliOS/p/ultraviolet/uv/uv.sw.js");
 
 const sw = new UVServiceWorker();
 
