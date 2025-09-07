@@ -1,10 +1,10 @@
 self.__uv$config = {
-	prefix: "/s/ultraviolet/",
+	prefix: "/NebuliOS/p/ultraviolet/ultraviolet/",
 	bare: "https://meximathurbanned.global.ssl.fastly.net/tspmo/",
 	encodeUrl: Ultraviolet.codec.xor.encode,
 	decodeUrl: Ultraviolet.codec.xor.decode,
-	handler: "/s/uv/uv.handler.js",
-	bundle: "/s/uv/uv.bundle.js",
-	config: "/s/uv/uv.config.js",
-	sw: "/s/uv/uv.sw.js",
+	handler: "/NebuliOS/p/ultraviolet/uv/uv.handler.js",
+	bundle: "/NebuliOS/p/ultraviolet/uv/uv.bundle.js",
+	config: "/NebuliOS/p/ultraviolet/uv/uv.config.js",
+	sw: "/NebuliOS/p/ultraviolet/uv/uv.sw.js",
 };
