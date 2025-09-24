@@ -63,7 +63,7 @@
           `);
           newTab.document.close();
 
-          fetch('/main.html')
+          fetch('/NebuliOS/main.html')
             .then(response => response.text())
             .then(content => {
               newTab.document.body.innerHTML = content;
